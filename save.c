@@ -11,8 +11,8 @@ void save(char nombre[],char contra[])
 	FILE * fp1;
 	fp=fopen("Usuario.txt","a");
 	fp1=fopen("Contra.txt","a");
-	fprintf(fp,"%s", nombre);
-	fprintf(fp1,"%s", contra);
+	fprintf(fp,"%s\n", nombre);
+	fprintf(fp1,"%s\n", contra);
 	fclose(fp);
 	fclose(fp1);
 
@@ -21,15 +21,22 @@ bool read(char nombre[],char contra[])
 {
 	FILE * fp;
 	FILE * fp1;
-	char line[256];
-	char line1[256];
 	fp=fopen("Usuario.txt","r");
 	fp1=fopen("Contra.txt","r");
-	while ( fgets ( line, sizeof line, fp ) != NULL && fgets ( line1, sizeof line1, fp1 ) )
-    {
-    	 if (strstr(line, nombre)&& strstr(line1, contra))
-    	 	return true;
+	char *c;
+	char *d;
+	int cuentanom=0;
+	int cuentacon=0;
+	while (fgets(c , sizeof(c) ,fp )!= NULL&& fgets(d , sizeof(d) ,fp1 )!= NULL)
+    {	
+    	if(*c=='\n')
+    		cuentanom++;
+    	if(*d=='\n')
+    		cuentacon++;
+    	 if (strstr(c, nombre)!=NULL && strstr(d, contra)!=NULL && cuentacon==cuentanom)
+    	 return true;
     	 else return false;
+    	
     } 
     fclose(fp);
     fclose(fp1);     

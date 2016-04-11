@@ -12,8 +12,8 @@ int main()
 	int opcionAdmin;
 	int opcionUsuarioMetido;
 	int opcionAdminMetido;
-	char nombre[50];
-	char contra[50];
+	char *nombre;
+	char *contra;
 	bool exist;
 	printf("Bienvenido a A-TEAM STUDIOS.\n En la siguiente aplicación podrán realizar acciones relacionadas con nuestro cine.\n Disfrútenlo =D\n");
 	do
@@ -36,18 +36,26 @@ int main()
 		        switch(opcionUsuario)
 		        {
 		        	case 2:
+		        		nombre = (char*)malloc ( sizeof(char) );
+		        		contra = (char*)malloc ( sizeof(char) );
 			        	printf("Escriba el nombre de usuario. \n");
-			        	scanf("%s", &nombre);
+			        	scanf("%s", nombre);
 			        	printf("Contraseña\n");
-			        	scanf("%s", &contra);
+			        	scanf("%s", contra);
 			        	save(nombre,contra);
+			        	free(nombre);
+			        	free(contra);
 			        	break;
 			        case 1:
+			        	nombre = (char*)malloc ( sizeof(char) );
+		        		contra = (char*)malloc ( sizeof(char) );
 			        	printf("Escriba el nombre de usuario. \n");
-			        	scanf("%s", &nombre);
+			        	scanf("%s", nombre);
 			        	printf("Contraseña\n");
-			        	scanf("%s", &contra);
+			        	scanf("%s", contra);
 			        	exist=read(nombre, contra);
+			        	free(nombre);
+			        	free(contra);
 			        	if(exist==true){
 			        	printf("1.Cartelera.\n\n");
 		       				printf("2.Puntuar película.\n\n");
