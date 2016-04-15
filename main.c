@@ -2,10 +2,10 @@
 #include "save.h"
 #include <stdlib.h>
 #include <string.h>
+#define MAX_LENGHT 20
 typedef int bool;
 #define true 1
 #define false 0
-#define maximo 20
 
 void clear_if_needed(char *str)
 {
@@ -25,8 +25,9 @@ int main()
 	int opcionAdminMetido;
 	char *nombre;
 	char *contra;
-	char guardanombre[maximo];
-	char guardacontra[maximo];
+	char str[MAX_LENGHT];
+	char guardanombre[MAX_LENGHT];
+	char guardacontra[MAX_LENGHT];
 	bool exist;
 	printf("Bienvenido a A-TEAM STUDIOS.\n En la siguiente aplicacion podran realizar acciones relacionadas con nuestro cine.\n Disfrutenlo =D\n");
 	do
@@ -49,30 +50,51 @@ int main()
 		        switch(opcionUsuario)
 		        {
 		        	case 2:
-		        		nombre = (char*)malloc ( maximo*sizeof(char) );
-		        		contra = (char*)malloc ( maximo *sizeof(char) );
-			        	printf("Escriba el nombre de usuario. \n");
-			        	fgets(nombre, maximo, stdin);
-    					clear_if_needed(nombre);
-    					sscanf(nombre, "%s", guardanombre); 
-			        	printf("Contrasena\n");
-			        	fgets(contra, maximo, stdin);
-    					clear_if_needed(contra);
-    					sscanf(nombre, "%s", guardacontra);
-			        	save(guardanombre, guardacontra);
-			        	free(nombre);
-			        	free(contra);
+		        		//nombre = (char*)malloc ( maximo *sizeof(char) );
+		        		//contra = (char*)malloc ( maximo *sizeof(char) );
+		        		if (fgets (str, MAX_LENGHT, stdin) != NULL){
+
+				        	printf("Escriba el nombre de usuario. \n");
+				        	fgets(str,MAX_LENGHT,stdin);
+	    					clear_if_needed(str);
+	    					sscanf(str, "%s", guardanombre); 
+
+	    					nombre = (char*)malloc ( strlen((guardanombre) +1) * sizeof(char) );
+	    					strcpy(nombre, guardanombre);
+
+				        	printf("Contrasena\n");
+				        	fgets(str,MAX_LENGHT,stdin);
+	    					clear_if_needed(str);
+	    					sscanf(str, "%s",guardacontra);
+
+	    					contra = (char*)malloc ( strlen((guardacontra) +1) * sizeof(char) );
+	    					strcpy(contra, guardacontra);
+
+				        	save(nombre, contra);
+				        	free(nombre);
+				        	free(contra);
+			        }
 			        	break;
-			        case 1:
-			        	nombre = (char*)malloc ( sizeof(char) );
-		        		contra = (char*)malloc ( sizeof(char) );
-			        	printf("Escriba el nombre de usuario. \n");
-			        	fgets(nombre, maximo, stdin);
-    					clear_if_needed(nombre);
-			        	fgets(contra, maximo, stdin);
-    					clear_if_needed(contra);
-    					sscanf(contra, "%s", guardacontra);
-			        	exist=read(guardanombre, guardacontra);
+			        case 1: 
+			        	if (fgets (str, MAX_LENGHT, stdin) != NULL)
+			        	{
+				        	printf("Escriba el nombre de usuario. \n");
+				        	fgets(str,MAX_LENGHT,stdin);
+	    					clear_if_needed(str);
+	    					sscanf(str, "%s", guardanombre); 
+
+	    					nombre = (char*)malloc ( strlen((guardanombre) +1) * sizeof(char) );
+	    					strcpy(nombre, guardanombre);
+
+				        	printf("Contrasena\n");
+				        	fgets(str,MAX_LENGHT,stdin);
+	    					clear_if_needed(str);
+	    					sscanf(str, "%s",guardacontra);
+
+	    					contra = (char*)malloc ( strlen((guardacontra) +1) * sizeof(char) );
+	    					strcpy(contra, guardacontra);
+	    				}
+			        	exist=read(nombre, contra);
 			        	free(nombre);
 			        	free(contra);
 			        	if(exist==true){
