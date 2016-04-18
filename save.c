@@ -7,19 +7,38 @@ typedef int bool;
 #define false 0
 void save(char nombre[],char contra[])
 {
-	FILE * fp;
-	FILE * fp1;
+	FILE *fp;
 	fp=fopen("Usuario.txt","a");
-	fp1=fopen("Contra.txt","a");
-	fprintf(fp,"%s\n", nombre);
-	fprintf(fp1,"%s\n", contra);
+	fprintf(fp,"%s\n%s\n", nombre,contra);
 	fclose(fp);
-	fclose(fp1);
 
 }
 bool read(char nombre[],char contra[])
 {
-	FILE * fp;
+
+	FILE *fp;
+
+	fp = fopen ("Usuario.txt","r");
+
+	char c;
+
+	int n = 0;
+	bool parinpar = false; //false es que esta en la inpar
+	char caracteres[30];
+
+	while ((c = fgetc(f)) != EOF)
+	{
+		if (c != '\n')
+		{
+			if (parinpar == false)
+			{
+			
+			}	
+		}
+	}
+
+
+	/*FILE *fp;
 	FILE * fp1;
 	fp=fopen("Usuario.txt","r");
 	fp1=fopen("Contra.txt","r");
@@ -41,7 +60,7 @@ bool read(char nombre[],char contra[])
 		if (strcmp(cChar, nombre)==0 && strcmp(dChar, contra)==0 && cuentacon==cuentanom)
     	 return true;
     	 else return false;
-	}
+	}*/
 	
 	/*while (fgets(c , sizeof(c) ,fp )!= NULL&& fgets(d , sizeof(d) ,fp1 )!= NULL)
     {
@@ -59,6 +78,6 @@ bool read(char nombre[],char contra[])
     	 else return false;
     	
     } */
-    fclose(fp);
-    fclose(fp1);     
+    //fclose(fp);
+    //fclose(fp1);     
 }
