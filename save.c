@@ -7,77 +7,80 @@ typedef int bool;
 #define false 0
 void save(char nombre[],char contra[])
 {
-	FILE *fp;
+	FILE * fp;
 	fp=fopen("Usuario.txt","a");
 	fprintf(fp,"%s\n%s\n", nombre,contra);
 	fclose(fp);
 
 }
+bool comprobar(char nombre[])
+{
+	FILE * fp;
+	fp=fopen("Usuario.txt","r");
+	char c[100];
+	int i=1;
+	int a;
+	char name [100];
+	if(fp==NULL)
+		return true;
+	else{
+	while (fgets(c,100,fp)!=NULL)	
+	{
+	
+		if((i%2)!=0){
+				sscanf(c,"%s",name);
+				if(strcmp(name,nombre)==0){
+				a=1;
+				}
+				
+			}
+	i++;
+	}
+	if(a==1)
+		return false;
+	else return true;
+}
+fclose(fp);	
+}
 bool read(char nombre[],char contra[])
 {
-
-	FILE *fp;
-
-	fp = fopen ("Usuario.txt","r");
-
-	char c;
-
-	int n = 0;
-	bool parinpar = false; //false es que esta en la inpar
-	char caracteres[30];
-
-	while ((c = fgetc(f)) != EOF)
-	{
-		if (c != '\n')
-		{
-			if (parinpar == false)
-			{
-			
-			}	
-		}
-	}
-
-
-	/*FILE *fp;
-	FILE * fp1;
+	FILE * fp;
 	fp=fopen("Usuario.txt","r");
-	fp1=fopen("Contra.txt","r");
-	char c;
-	char d;
-	int cuentanom;
-	int cuentacon;
-	
-	while ((c = fgetc(fp)) != EOF&&(d = fgetc(fp1) != EOF))	
-	{
-		if (c == '\n')
-			cuentanom++;  
-		if(d=='\n')
-			cuentacon++;
-		char *cChar = malloc(sizeof(char));
-		*cChar=c;
-		char *dChar = malloc(sizeof(char));
-		*dChar=d;
-		if (strcmp(cChar, nombre)==0 && strcmp(dChar, contra)==0 && cuentacon==cuentanom)
-    	 return true;
-    	 else return false;
-	}*/
-	
-	/*while (fgets(c , sizeof(c) ,fp )!= NULL&& fgets(d , sizeof(d) ,fp1 )!= NULL)
-    {
-    	for(i=0;i<strlen(nombre);i++){
-    		while(nombre[i]!="\n"){
+	char c[100];
+	int i=1;
+	int a;
+	int b;
+	int d;
+	int e;
+	char name [100];
+	char password[100];
 
-    		}
-    //	}
-    	if(*c=='\n')
-    		cuentanom++;
-    	if(*d=='\n')
-    		cuentacon++;
-    	 if (strstr(c, nombre)!=NULL && strstr(d, contra)!=NULL && cuentacon==cuentanom)
-    	 return true;
-    	 else return false;
-    	
-    } */
-    //fclose(fp);
-    //fclose(fp1);     
+	while (fgets(c,100,fp)!=NULL)	
+	{
+		
+			if((i%2)!=0){
+				sscanf(c,"%s",name);
+				if(strcmp(name,nombre)==0){
+					a=1;
+					d=i;	
+				}
+			}
+			
+			if((i%2)==0){
+				sscanf(c,"%s",password);
+				if(strcmp(password,contra)==0){
+					b=1;
+					e=i;
+				}
+
+			}
+			i++;
+			
+	}
+	if(a==1 && b==1 && e-d==1)
+				return true;
+			
+			else return false;
+		
+    fclose(fp);
 }

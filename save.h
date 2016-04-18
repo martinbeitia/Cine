@@ -4,3 +4,4 @@ typedef int bool;
 #define false 0
 void save(char nombre[],char contra[]);
 bool read(char nombre[], char contra[]);
+bool comprobar(char nombre[]);
