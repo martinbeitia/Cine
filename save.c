@@ -23,25 +23,27 @@ bool comprobar(char nombre[])
 	char name [100];
 	if(fp==NULL)
 		return true;
-	else{
-	while (fgets(c,100,fp)!=NULL)	
+	else
 	{
-	
-		if((i%2)!=0){
+		while (fgets(c,100,fp)!=NULL)	
+		{
+			if((i%2)!=0)
+			{
 				sscanf(c,"%s",name);
-				if(strcmp(name,nombre)==0){
-				a=1;
-				}
-				
+				if(strcmp(name,nombre)==0)
+				{
+					a=1;
+				}			
 			}
-	i++;
+			i++;
+		}
+		if(a==1)
+			return false;
+		else return true;
 	}
-	if(a==1)
-		return false;
-	else return true;
+	fclose(fp);	
 }
-fclose(fp);	
-}
+
 bool read(char nombre[],char contra[])
 {
 	FILE * fp;
@@ -56,31 +58,31 @@ bool read(char nombre[],char contra[])
 	char password[100];
 
 	while (fgets(c,100,fp)!=NULL)	
-	{
-		
-			if((i%2)!=0){
-				sscanf(c,"%s",name);
-				if(strcmp(name,nombre)==0){
-					a=1;
-					d=i;	
-				}
+	{		
+		if((i%2)!=0)
+		{
+			sscanf(c,"%s",name);
+			if(strcmp(name,nombre)==0)
+			{
+				a=1;
+				d=i;	
 			}
-			
-			if((i%2)==0){
-				sscanf(c,"%s",password);
-				if(strcmp(password,contra)==0){
-					b=1;
-					e=i;
-				}
-
+		}	
+		if((i%2)==0)
+		{
+			sscanf(c,"%s",password);
+			if(strcmp(password,contra)==0)
+			{
+				b=1;
+				e=i;
 			}
-			i++;
-			
+		}
+		i++;		
 	}
 	if(a==1 && b==1 && e-d==1)
-				return true;
+	return true;
 			
-			else return false;
+	else return false;
 		
     fclose(fp);
 }
