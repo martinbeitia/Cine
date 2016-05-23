@@ -29,7 +29,7 @@ int insertPeli(string basededatos){
 	int hora;
 	float precio;
 
-	cout<<"Escribe el nombre de la pelicula"<<endl;
+	cout<<"Escribe el titulo de la pelicula"<<endl;
 	cin>>titulo;
 	cout<<"Escribe el director de la pelicula"<<endl;
 	cin>>director;
@@ -50,7 +50,7 @@ int insertPeli(string basededatos){
 
 	metidas++;
 
-	string sentencia = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio) values (NULL,?)";
+	string sentencia = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio) values (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio)";
 
 	int result = sqlite3_prepare_v2(db, sentencia, sentencia.length(), &stmt, NULL) ;
 		if (result != SQLITE_OK) {
@@ -61,12 +61,12 @@ int insertPeli(string basededatos){
 
 		printf("SQL query prepared (INSERT)\n");
 
-		result = sqlite3_bind_text(stmt, 1, basededatos.c_str(), basededatos.length(), SQLITE_STATIC);
-		if (result != SQLITE_OK) {
-			printf("Error binding parameters\n");
-			printf("%s\n", sqlite3_errmsg(db));
-			return result;
-		}
+		//result = sqlite3_bind_text(stmt, 1, basededatos.c_str(), basededatos.length(), SQLITE_STATIC);
+		//if (result != SQLITE_OK) {
+			//printf("Error binding parameters\n");
+		//	printf("%s\n", sqlite3_errmsg(db));
+			//return result;
+		//}
 
 		result = sqlite3_step(stmt);
 		if (result != SQLITE_DONE) {
@@ -123,7 +123,7 @@ int borrarPeli(string borrar){
 int mostrarPelis() {
 		sqlite3_stmt *stmt;
 
-		char sql[] = "select titulo, director, actor, duracion, genero, anyo, fecha, hora, precio from basededatos";
+		char sql[] = "select * from basededatos";
 
 		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
@@ -162,6 +162,27 @@ int mostrarPelis() {
 		printf("Prepared statement finalized (SELECT)\n");
 
 		return SQLITE_OK;
+	}
+
+	int buscarpordirector(string buscar){
+
+		return SQLITE_OK;
+	}
+
+	Gestor(string dbFile) {
+		int result = sqlite3_open("basededatos.sqlite", &db);
+		if (result != SQLITE_OK) {
+			printf("Error opening database\n");
+
+		}
+	}
+
+	~Gestor() {
+		int result = sqlite3_close(db);
+		if (result != SQLITE_OK) {
+			printf("Error opening database\n");
+			printf("%s\n", sqlite3_errmsg(db));
+		}	
 	}
 
 }
