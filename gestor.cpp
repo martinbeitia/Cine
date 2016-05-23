@@ -87,10 +87,10 @@ int insertPeli(string basededatos){
 
 }
 
-int borrarPeli(string titulo){
+int borrarPeli(string borrar){
 	sqlite3_stmt *stmt;
 
-		string sentencia = "delete from basededatos";
+		string sentencia = "delete from basededatos where titulo=borrar";
 
 		int result = sqlite3_prepare_v2(db, sentencia, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
