@@ -3,7 +3,7 @@
 #include "sqlite3.h"
 using namespace std;
 
- Pelicula::Pelicula(string titulo, string director, string actor, float duracion, string genero, int anyo, float precio, int fecha, int hora)
+ Pelicula::Pelicula(string titulo, string director, string actor, int duracion, string genero, int anyo, std::string  fecha, std::string  hora, int precio)
  {
  	this->titulo=titulo;
  	this->director=director;
@@ -27,7 +27,7 @@ using namespace std;
 {
 	return this->actor;
 }
- float Pelicula::getDuracion() const
+ int Pelicula::getDuracion() const
 {
 	return this->duracion;
 }
@@ -39,15 +39,15 @@ using namespace std;
 {
 	return this->anyo;
 }
- float Pelicula::getPrecio() const
+ int Pelicula::getPrecio() const
 {
 	return this->precio;
 }
- int Pelicula::getFecha() const
+ string  Pelicula::getFecha() const
 {
 	return this->fecha;
 }
- int Pelicula::getHora() const
+ string Pelicula::getHora() const
 {
 	return this->hora;
 }

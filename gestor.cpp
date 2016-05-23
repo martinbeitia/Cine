@@ -14,20 +14,20 @@ class Gestor{
 private:
 		sqlite3 *db = NULL;
 public:
-int metidas =0;
 
-int insertPeli(string basededatos){
+
+int Gestor::insertPeli(string basededatos){
 
 	sqlite3_stmt *stmt;
-	string titulo;
-	string director;
-	string actor;
-	float duracion;
-	string genero;
-	int anyo;
-	int fecha;
-	int hora;
-	float precio;
+	char titulo[100] ;
+		char director[100] ;   
+		char actor[100] ;
+		int duracion;
+		char genero[100] ;
+		int anyo;
+		char fecha[100] ;
+		char hora[100] ;
+		int precio;
 
 	cout<<"Escribe el titulo de la pelicula"<<endl;
 	cin>>titulo;
@@ -48,11 +48,10 @@ int insertPeli(string basededatos){
 	cout<<"Escribe el precio de la pelicula"<<endl;
 	cin>>precio;
 
-	metidas++;
 
-	string sentencia = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio) values (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio)";
+	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio) values (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio)";
 
-	int result = sqlite3_prepare_v2(db, sentencia, sentencia.length(), &stmt, NULL) ;
+	int result = sqlite3_prepare_v2(db, sentencia, strlen(sentencia)+1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (INSERT)\n");
 			printf("%s\n", sqlite3_errmsg(db));
@@ -87,10 +86,10 @@ int insertPeli(string basededatos){
 
 }
 
-int borrarPeli(string borrar){
+int Gestor::borrarPeli(string borrar){
 	sqlite3_stmt *stmt;
 
-		string sentencia = "delete from basededatos where titulo=borrar";
+		char sentencia[] = "delete from basededatos where titulo=borrar";
 
 		int result = sqlite3_prepare_v2(db, sentencia, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
@@ -120,7 +119,7 @@ int borrarPeli(string borrar){
 		return SQLITE_OK;
 }
 
-int mostrarPelis() {
+int Gestor::mostrarPelis() {
 		sqlite3_stmt *stmt;
 
 		char sql[] = "select * from basededatos";
@@ -134,15 +133,15 @@ int mostrarPelis() {
 
 		printf("SQL query prepared (SELECT)\n");
 
-		string titulo;
-		string director;   
-		string actor;
+		char titulo[100] ;
+		char director[100] ;   
+		char actor[100] ;
 		int duracion;
-		string genero;
+		char genero[100] ;
 		int anyo;
-		string fecha;
-		string hora;
-		float precio;
+		char fecha[100] ;
+		char hora[100] ;
+		int precio;
 
 		printf("\n");
 		printf("\n");
@@ -150,15 +149,15 @@ int mostrarPelis() {
 		do {
 			result = sqlite3_step(stmt) ;
 			if (result == SQLITE_ROW) {
-				titulo = sqlite3_column_text(stmt, 0);
-				director = sqlite3_column_text(stmt, 1);
-				actor = sqlite3_column_text(stmt, 2);
+				strcpy(titulo, (char *) sqlite3_column_text(stmt, 0));
+				strcpy(director, (char *) sqlite3_column_text(stmt, 1));
+				strcpy(actor, (char *) sqlite3_column_text(stmt, 2));
 				duracion = sqlite3_column_int(stmt, 3);
-				genero = sqlite3_column_text(stmt, 4);
+				strcpy(genero, (char *) sqlite3_column_text(stmt, 4));
 				anyo  = sqlite3_column_int(stmt, 5);
-				fecha = sqlite3_column_text(stmt, 6);
-				hora = sqlite3_column_text(stmt, 7);
-				precio = sqlite3_column_float(stmt, 8);
+				strcpy(fecha, (char *) sqlite3_column_text(stmt, 6));
+				strcpy(hora, (char *) sqlite3_column_text(stmt, 7));
+				precio = sqlite3_column_int(stmt, 8);
 
 				cout << "Titulo: " << titulo << endl;
 				cout << "Director: " << director << endl;
@@ -169,6 +168,7 @@ int mostrarPelis() {
 				cout << "Fecha: " << fecha << endl;
 				cout << "Hora: " << hora << endl;
 				cout << "Precio (euros): " << precio << endl;
+				cout << "----------------------------" << endl;
 				
 				
 			}
@@ -189,7 +189,7 @@ int mostrarPelis() {
 		return SQLITE_OK;
 	}
 
-	int buscarpordirector(string buscar){
+	int Gestor::buscarpordirector(char buscar[] ){
 
 		sqlite3_stmt *stmt;
 
@@ -203,25 +203,32 @@ int mostrarPelis() {
 
 		printf("SQL query prepared (SELECT)\n");
 
-		int id;
-		char name[100];
+		char titulo[100] ;
+		char director[100] ;   
+		char actor[100] ;
+		int duracion;
+		char genero[100] ;
+		int anyo;
+		char fecha[100] ;
+		char hora[100] ;
+		int precio;
 
 		printf("\n");
 		printf("\n");
-		printf("Peliculas del director/a %s: ", buscar);
+		cout << "Peliculas del director/a: " << buscar << endl;
 		printf("\n");
 		do {
 			result = sqlite3_step(stmt) ;
 			if (result == SQLITE_ROW) {
-				titulo = sqlite3_column_text(stmt, 0);
-				director = sqlite3_column_text(stmt, 1);
-				actor = sqlite3_column_text(stmt, 2);
+				strcpy(titulo, (char *) sqlite3_column_text(stmt, 0));
+				strcpy(director, (char *) sqlite3_column_text(stmt, 1));
+				strcpy(actor, (char *) sqlite3_column_text(stmt, 2));
 				duracion = sqlite3_column_int(stmt, 3);
-				genero = sqlite3_column_text(stmt, 4);
+				strcpy(genero, (char *) sqlite3_column_text(stmt, 4));
 				anyo  = sqlite3_column_int(stmt, 5);
-				fecha = sqlite3_column_text(stmt, 6);
-				hora = sqlite3_column_text(stmt, 7);
-				precio = sqlite3_column_float(stmt, 8);
+				strcpy(fecha, (char *) sqlite3_column_text(stmt, 6));
+				strcpy(hora, (char *) sqlite3_column_text(stmt, 7));
+				precio = sqlite3_column_int(stmt, 8);
 
 				cout << "Titulo: " << titulo << endl;
 				cout << "Director: " << director << endl;
@@ -232,6 +239,7 @@ int mostrarPelis() {
 				cout << "Fecha: " << fecha << endl;
 				cout << "Hora: " << hora << endl;
 				cout << "Precio (euros): " << precio << endl;
+				cout << "----------------------------" << endl;
 			}
 		} while (result == SQLITE_ROW);
 
@@ -249,7 +257,7 @@ int mostrarPelis() {
 		return SQLITE_OK;
 	}
 
-	int buscarporgenero(string buscardos){
+	int Gestor::buscarporgenero(char buscardos[] ){
 
 		sqlite3_stmt *stmt;
 
@@ -263,8 +271,15 @@ int mostrarPelis() {
 
 		printf("SQL query prepared (SELECT)\n");
 
-		int id;
-		char name[100];
+		char titulo[100] ;
+		char director[100] ;   
+		char actor[100] ;
+		int duracion;
+		char genero[100] ;
+		int anyo;
+		char fecha[100] ;
+		char hora[100] ;
+		int precio;
 
 		printf("\n");
 		printf("\n");
@@ -273,15 +288,15 @@ int mostrarPelis() {
 		do {
 			result = sqlite3_step(stmt) ;
 			if (result == SQLITE_ROW) {
-				titulo = sqlite3_column_text(stmt, 0);
-				director = sqlite3_column_text(stmt, 1);
-				actor = sqlite3_column_text(stmt, 2);
+				strcpy(titulo, (char *) sqlite3_column_text(stmt, 0));
+				strcpy(director, (char *) sqlite3_column_text(stmt, 1));
+				strcpy(actor, (char *) sqlite3_column_text(stmt, 2));
 				duracion = sqlite3_column_int(stmt, 3);
-				genero = sqlite3_column_text(stmt, 4);
+				strcpy(genero, (char *) sqlite3_column_text(stmt, 4));
 				anyo  = sqlite3_column_int(stmt, 5);
-				fecha = sqlite3_column_text(stmt, 6);
-				hora = sqlite3_column_text(stmt, 7);
-				precio = sqlite3_column_float(stmt, 8);
+				strcpy(fecha, (char *) sqlite3_column_text(stmt, 6));
+				strcpy(hora, (char *) sqlite3_column_text(stmt, 7));
+				precio = sqlite3_column_int(stmt, 8);
 
 				cout << "Titulo: " << titulo << endl;
 				cout << "Director: " << director << endl;
@@ -292,6 +307,7 @@ int mostrarPelis() {
 				cout << "Fecha: " << fecha << endl;
 				cout << "Hora: " << hora << endl;
 				cout << "Precio (euros): " << precio << endl;
+				cout << "----------------------------" << endl;
 			}
 		} while (result == SQLITE_ROW);
 
@@ -309,7 +325,7 @@ int mostrarPelis() {
 		return SQLITE_OK;
 	}
 
-	int buscarporanyo(string buscartres){
+	int Gestor::buscarporanyo(char buscartres[] ){
 
 		sqlite3_stmt *stmt;
 
@@ -323,8 +339,15 @@ int mostrarPelis() {
 
 		printf("SQL query prepared (SELECT)\n");
 
-		int id;
-		char name[100];
+		char titulo[100] ;
+		char director[100] ;   
+		char actor[100] ;
+		int duracion;
+		char genero[100] ;
+		int anyo;
+		char fecha[100] ;
+		char hora[100] ;
+		int precio;
 
 		printf("\n");
 		printf("\n");
@@ -333,15 +356,15 @@ int mostrarPelis() {
 		do {
 			result = sqlite3_step(stmt) ;
 			if (result == SQLITE_ROW) {
-				titulo = sqlite3_column_text(stmt, 0);
-				director = sqlite3_column_text(stmt, 1);
-				actor = sqlite3_column_text(stmt, 2);
+				strcpy(titulo, (char *) sqlite3_column_text(stmt, 0));
+				strcpy(director, (char *) sqlite3_column_text(stmt, 1));
+				strcpy(actor, (char *) sqlite3_column_text(stmt, 2));
 				duracion = sqlite3_column_int(stmt, 3);
-				genero = sqlite3_column_text(stmt, 4);
+				strcpy(genero, (char *) sqlite3_column_text(stmt, 4));
 				anyo  = sqlite3_column_int(stmt, 5);
-				fecha = sqlite3_column_text(stmt, 6);
-				hora = sqlite3_column_text(stmt, 7);
-				precio = sqlite3_column_float(stmt, 8);
+				strcpy(fecha, (char *) sqlite3_column_text(stmt, 6));
+				strcpy(hora, (char *) sqlite3_column_text(stmt, 7));
+				precio = sqlite3_column_int(stmt, 8);
 
 				cout << "Titulo: " << titulo << endl;
 				cout << "Director: " << director << endl;
@@ -352,6 +375,7 @@ int mostrarPelis() {
 				cout << "Fecha: " << fecha << endl;
 				cout << "Hora: " << hora << endl;
 				cout << "Precio (euros): " << precio << endl;
+				cout << "----------------------------" << endl;
 			}
 		} while (result == SQLITE_ROW);
 
@@ -385,4 +409,4 @@ int mostrarPelis() {
 		}	
 	}
 
-}
+};

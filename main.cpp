@@ -26,12 +26,12 @@ void insertPeli(Pelicula * a,int metidas){
 	string titulo;
 	string director;
 	string actor;
-	float duracion;
+	int duracion;
 	string genero;
 	int anyo;
 	int fecha;
 	int hora;
-	float precio;
+	int precio;
 
 
 
