@@ -134,8 +134,15 @@ int mostrarPelis() {
 
 		printf("SQL query prepared (SELECT)\n");
 
-		int id;
-		char name[100];
+		string titulo;
+		string director;   
+		string actor;
+		int duracion;
+		string genero;
+		int anyo;
+		string fecha;
+		string hora;
+		float precio;
 
 		printf("\n");
 		printf("\n");
@@ -143,9 +150,27 @@ int mostrarPelis() {
 		do {
 			result = sqlite3_step(stmt) ;
 			if (result == SQLITE_ROW) {
-				id = sqlite3_column_int(stmt, 0);
-				strcpy(name, (char *) sqlite3_column_text(stmt, 1));
-				printf("ID: %d Name: %s\n", id, name);
+				titulo = sqlite3_column_text(stmt, 0);
+				director = sqlite3_column_text(stmt, 1);
+				actor = sqlite3_column_text(stmt, 2);
+				duracion = sqlite3_column_int(stmt, 3);
+				genero = sqlite3_column_text(stmt, 4);
+				anyo  = sqlite3_column_int(stmt, 5);
+				fecha = sqlite3_column_text(stmt, 6);
+				hora = sqlite3_column_text(stmt, 7);
+				precio = sqlite3_column_float(stmt, 8);
+
+				cout << "Titulo: " << titulo << endl;
+				cout << "Director: " << director << endl;
+				cout << "Actor: " << actor << endl;
+				cout << "Duracion (min.): " << duracion << endl;
+				cout << "Genero: " << genero << endl;
+				cout << "Año: " << anyo << endl;
+				cout << "Fecha: " << fecha << endl;
+				cout << "Hora: " << hora << endl;
+				cout << "Precio (euros): " << precio << endl;
+				
+				
 			}
 		} while (result == SQLITE_ROW);
 
@@ -166,6 +191,181 @@ int mostrarPelis() {
 
 	int buscarpordirector(string buscar){
 
+		sqlite3_stmt *stmt;
+
+		char sql[] = "select * from basededatos where director=buscar";
+		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("SQL query prepared (SELECT)\n");
+
+		int id;
+		char name[100];
+
+		printf("\n");
+		printf("\n");
+		printf("Peliculas del director/a %s: ", buscar);
+		printf("\n");
+		do {
+			result = sqlite3_step(stmt) ;
+			if (result == SQLITE_ROW) {
+				titulo = sqlite3_column_text(stmt, 0);
+				director = sqlite3_column_text(stmt, 1);
+				actor = sqlite3_column_text(stmt, 2);
+				duracion = sqlite3_column_int(stmt, 3);
+				genero = sqlite3_column_text(stmt, 4);
+				anyo  = sqlite3_column_int(stmt, 5);
+				fecha = sqlite3_column_text(stmt, 6);
+				hora = sqlite3_column_text(stmt, 7);
+				precio = sqlite3_column_float(stmt, 8);
+
+				cout << "Titulo: " << titulo << endl;
+				cout << "Director: " << director << endl;
+				cout << "Actor: " << actor << endl;
+				cout << "Duracion (min.): " << duracion << endl;
+				cout << "Genero: " << genero << endl;
+				cout << "Año: " << anyo << endl;
+				cout << "Fecha: " << fecha << endl;
+				cout << "Hora: " << hora << endl;
+				cout << "Precio (euros): " << precio << endl;
+			}
+		} while (result == SQLITE_ROW);
+
+		printf("\n");
+		printf("\n");
+
+		result = sqlite3_finalize(stmt);
+		if (result != SQLITE_OK) {
+			printf("Error finalizing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("Prepared statement finalized (SELECT)\n");
+		return SQLITE_OK;
+	}
+
+	int buscarporgenero(string buscardos){
+
+		sqlite3_stmt *stmt;
+
+		char sql[] = "select * from basededatos where genero=buscardos";
+		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("SQL query prepared (SELECT)\n");
+
+		int id;
+		char name[100];
+
+		printf("\n");
+		printf("\n");
+		printf("Peliculas del genero %s: ",buscardos);
+		printf("\n");
+		do {
+			result = sqlite3_step(stmt) ;
+			if (result == SQLITE_ROW) {
+				titulo = sqlite3_column_text(stmt, 0);
+				director = sqlite3_column_text(stmt, 1);
+				actor = sqlite3_column_text(stmt, 2);
+				duracion = sqlite3_column_int(stmt, 3);
+				genero = sqlite3_column_text(stmt, 4);
+				anyo  = sqlite3_column_int(stmt, 5);
+				fecha = sqlite3_column_text(stmt, 6);
+				hora = sqlite3_column_text(stmt, 7);
+				precio = sqlite3_column_float(stmt, 8);
+
+				cout << "Titulo: " << titulo << endl;
+				cout << "Director: " << director << endl;
+				cout << "Actor: " << actor << endl;
+				cout << "Duracion (min.): " << duracion << endl;
+				cout << "Genero: " << genero << endl;
+				cout << "Año: " << anyo << endl;
+				cout << "Fecha: " << fecha << endl;
+				cout << "Hora: " << hora << endl;
+				cout << "Precio (euros): " << precio << endl;
+			}
+		} while (result == SQLITE_ROW);
+
+		printf("\n");
+		printf("\n");
+
+		result = sqlite3_finalize(stmt);
+		if (result != SQLITE_OK) {
+			printf("Error finalizing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("Prepared statement finalized (SELECT)\n");
+		return SQLITE_OK;
+	}
+
+	int buscarporanyo(string buscartres){
+
+		sqlite3_stmt *stmt;
+
+		char sql[] = "select * from basededatos where anyo=buscartres";
+		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("SQL query prepared (SELECT)\n");
+
+		int id;
+		char name[100];
+
+		printf("\n");
+		printf("\n");
+		printf("Peliculas del año %s: ", buscartres);
+		printf("\n");
+		do {
+			result = sqlite3_step(stmt) ;
+			if (result == SQLITE_ROW) {
+				titulo = sqlite3_column_text(stmt, 0);
+				director = sqlite3_column_text(stmt, 1);
+				actor = sqlite3_column_text(stmt, 2);
+				duracion = sqlite3_column_int(stmt, 3);
+				genero = sqlite3_column_text(stmt, 4);
+				anyo  = sqlite3_column_int(stmt, 5);
+				fecha = sqlite3_column_text(stmt, 6);
+				hora = sqlite3_column_text(stmt, 7);
+				precio = sqlite3_column_float(stmt, 8);
+
+				cout << "Titulo: " << titulo << endl;
+				cout << "Director: " << director << endl;
+				cout << "Actor: " << actor << endl;
+				cout << "Duracion (min.): " << duracion << endl;
+				cout << "Genero: " << genero << endl;
+				cout << "Año: " << anyo << endl;
+				cout << "Fecha: " << fecha << endl;
+				cout << "Hora: " << hora << endl;
+				cout << "Precio (euros): " << precio << endl;
+			}
+		} while (result == SQLITE_ROW);
+
+		printf("\n");
+		printf("\n");
+
+		result = sqlite3_finalize(stmt);
+		if (result != SQLITE_OK) {
+			printf("Error finalizing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("Prepared statement finalized (SELECT)\n");
 		return SQLITE_OK;
 	}
 
