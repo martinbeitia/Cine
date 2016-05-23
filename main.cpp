@@ -21,7 +21,7 @@ void clear_if_needed(char *str)
     }
 }
 
-void insertPeli(){
+void insertPeli(Pelicula * a,int metidas){
 	string titulo;
 	string director;
 	string actor;
@@ -53,10 +53,19 @@ void insertPeli(){
 	cout<<"Escribe el precio de la pelicula"<<endl;
 	cin>>precio;
 
-	Pelicula *a=new Pelicula(titulo,director,actor,duracion,genero,anyo,fecha,hora,precio);
+	metidas++;
+
+	a=new Pelicula(titulo,director,actor,duracion,genero,anyo,fecha,hora,precio);
 
 
-
+}
+void quitarPeli(Pelicula* a, int metidas)
+{
+	int i;
+	for (i=0;i<metidas;i++)
+	{
+		cout<<a[i].getTitulo()<<endl;
+	}
 }
 
 int main()
@@ -66,6 +75,8 @@ int main()
 	int opcionAdmin;
 	int opcionUsuarioMetido;
 	int opcionAdminMetido;
+	int otraOpcion;
+	int metidas=0;
 	char *nombre;
 	char *contra;
 	char str[MAX_LENGHT];
@@ -74,6 +85,7 @@ int main()
 	bool exist;
 	bool add;
 	char num[MAX];
+	Pelicula *a;
 	printf("Bienvenido a A-TEAM STUDIOS.\n En la siguiente aplicacion podran realizar acciones relacionadas con nuestro cine.\n Disfrutenlo =D\n");
 	do
 	{
@@ -219,7 +231,16 @@ int main()
 	   						sscanf(num, "%d", &opcionAdminMetido);
 		        			switch(opcionAdminMetido)
 		        			{
-		        				case 1:insertPeli();
+		        				case 1:
+		        				cout<<"1-Añadir  2-quitar"<<endl;
+		        				fgets(num,MAX,stdin);
+       							clear_if_needed(num);
+	   							sscanf(num, "%d", &otraOpcion);
+	   							if(otraOpcion==1)
+		        				insertPeli(a,metidas);
+		        				if(otraOpcion==2)
+		        				quitarPeli(a,metidas);
+		        				else cout<<"Opcion no valida"<<endl;
 		        				 break;
 		        				
 		        				case 2: break;
