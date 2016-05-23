@@ -5,6 +5,7 @@
 #include <string.h>
 #include <iostream>
 #include <string>
+#include "sqlite3.h"
 #define MAX_LENGHT 20
 #define MAX 2
 //typedef int bool;

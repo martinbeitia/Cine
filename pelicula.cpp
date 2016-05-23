@@ -1,5 +1,6 @@
 #include "Pelicula.h"
 #include <string>
+#include "sqlite3.h"
 using namespace std;
 
  Pelicula::Pelicula(string titulo, string director, string actor, float duracion, string genero, int anyo, float precio, int fecha, int hora)

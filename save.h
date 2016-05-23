@@ -2,6 +2,7 @@
 #ifndef _SAVE_H_
 #define _SAVE_H_
 #include <stdio.h>
+#include "sqlite3.h"
 //typedef int bool;
 //#define true 1
 //#define false 0
