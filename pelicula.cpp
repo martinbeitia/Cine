@@ -14,39 +14,43 @@ using namespace std;
  	this->fecha=fecha;
  	this->hora=hora;
  }
- string Pelicula::getTitulo()
+  string Pelicula::getTitulo() const
 {
 	return this->titulo;
 }
-string Pelicula::getDirector()
+ string Pelicula::getDirector() const
 {
 	return this->director;
 }
-string Pelicula::getActor()
+ string Pelicula::getActor() const
 {
 	return this->actor;
 }
-float Pelicula::getDuracion()
+ float Pelicula::getDuracion() const
 {
 	return this->duracion;
 }
-string Pelicula::getGenero()
+ string Pelicula::getGenero() const
 {
 	return this->genero;
 }
-int Pelicula::getAnyo()
+ int Pelicula::getAnyo() const
 {
 	return this->anyo;
 }
-float Pelicula::getPrecio()
+ float Pelicula::getPrecio() const
 {
 	return this->precio;
 }
-int Pelicula::getFecha()
+ int Pelicula::getFecha() const
 {
 	return this->fecha;
 }
-int Pelicula::getHora()
+ int Pelicula::getHora() const
 {
 	return this->hora;
+}
+
+Pelicula::~Pelicula(){
+
 }

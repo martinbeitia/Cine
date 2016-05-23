@@ -20,15 +20,15 @@ public:
 
 	~Pelicula();
 
-	std::string getTitulo();
-	std::string getDirector();
-	std::string getActor();
-	float getDuracion();
-	std::string getGenero();
-	int getAnyo();
-	float getPrecio();
-	int getFecha();
-	int getHora();
+	std::string getTitulo() const;
+	std::string getDirector() const;
+	std::string getActor() const;
+	float getDuracion() const;
+	std::string getGenero() const;
+	int getAnyo() const;
+	float getPrecio() const;
+	int getFecha() const;
+	int getHora() const;
 
 
 
