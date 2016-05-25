@@ -72,8 +72,10 @@ void accederUsuario(void)
 	contra = (char*)malloc ( strlen((str) +1) * sizeof(char) );
 	sscanf(str, "%s",contra);
 
+	Usuario u={nombre,contra};
 
-	exist=read(nombre, contra);
+
+	exist=read(u);
 	free(nombre);
 	free(contra);
 	if(exist==true)
@@ -125,16 +127,17 @@ int crearCuenta()
 	nombre = (char*)malloc ( strlen((str) +1) * sizeof(char) );
 	sscanf(str, "%s", nombre); 
 
-	add=comprobar(nombre);
+	printf("Contrasena\n");
+	fgets(str,MAX_LENGHT,stdin);
+	clear_if_needed(str);
+	contra = (char*)malloc ( strlen((str) +1) * sizeof(char) );
+	sscanf(str, "%s",contra);
+
+	Usuario u={nombre,contra};
+	add=comprobar(u);
 	if(add==true)
 	{
-    	printf("Contrasena\n");
-    	fgets(str,MAX_LENGHT,stdin);
-		clear_if_needed(str);
-		contra = (char*)malloc ( strlen((str) +1) * sizeof(char) );
-		sscanf(str, "%s",contra);
-
-    	save(nombre, contra);
+    	save(u);
     	free(nombre);
     	free(contra);
 	}		
@@ -164,6 +167,7 @@ void accederAdmin()
 	char *contra;
 	char str[MAX_LENGHT];
 	char num[MAX];
+	int opcionAdminMetido;
 
 	
 	printf("Escriba el nombre del administrador. \n");
@@ -177,15 +181,13 @@ void accederAdmin()
 	contra = (char*)malloc ( strlen((str) +1) * sizeof(char) );
 	clear_if_needed(str);
 	sscanf(str, "%s",contra);
-
 		
 
 	if((strcmp(nombre, "ateamstudios") ==0)&&(strcmp(contra, "ateamcines") ==0))
 	{
-    		
-		int opcionAdminMetido;
 
-		opcionAdminMetido = menuAdminDentro();
+
+		int opcionAdminMetido = menuAdminDentro();
 
 			switch(opcionAdminMetido){
 				case 1: break;
@@ -220,6 +222,8 @@ int menuAdminDentro()
 	fgets(num,MAX,stdin);
 	clear_if_needed(num);
 	sscanf(num, "%d", &optionAdminMetido);
+
+	return optionAdminMetido;
 
 
 }

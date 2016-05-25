@@ -6,15 +6,15 @@
 typedef int bool;
 //#define true 1
 //#define false 0
-void save(char nombre[],char contra[])
+void save(Usuario u)
 {
 	FILE * fp;
 	fp=fopen("Usuario.txt","a");
-	fprintf(fp,"%s\n%s\n", nombre,contra);
+	fprintf(fp,"%s\n%s\n", u.nombre,u.contra);
 	fclose(fp);
 
 }
-bool comprobar(char nombre[])
+bool comprobar(Usuario u)
 {
 	FILE * fp;
 	fp=fopen("Usuario.txt","r");
@@ -31,7 +31,7 @@ bool comprobar(char nombre[])
 			if((i%2)!=0)
 			{
 				sscanf(c,"%s",name);
-				if(strcmp(name,nombre)==0)
+				if(strcmp(name,u.nombre)==0)
 				{
 					a=1;
 				}			
@@ -45,7 +45,7 @@ bool comprobar(char nombre[])
 	fclose(fp);	
 }
 
-bool read(char nombre[],char contra[])
+bool read(Usuario u)
 {
 	FILE * fp;
 	fp=fopen("Usuario.txt","r");
@@ -63,7 +63,7 @@ bool read(char nombre[],char contra[])
 		if((i%2)!=0)
 		{
 			sscanf(c,"%s",name);
-			if(strcmp(name,nombre)==0)
+			if(strcmp(name,u.nombre)==0)
 			{
 				a=1;
 				d=i;	
@@ -72,7 +72,7 @@ bool read(char nombre[],char contra[])
 		if((i%2)==0)
 		{
 			sscanf(c,"%s",password);
-			if(strcmp(password,contra)==0)
+			if(strcmp(password,u.contra)==0)
 			{
 				b=1;
 				e=i;

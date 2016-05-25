@@ -3,9 +3,14 @@
 #define _SAVE_H_
 #include <stdio.h>
 #include "sqlite3.h"
-//typedef int bool;
-//#define true 1
-//#define false 0
+typedef int bool;
+#define true 1
+#define false 0
+typedef struct{
+	char* nombre;
+	char* contra;
+
+}Usuario;
 
 
 
@@ -13,9 +18,9 @@
 extern "C" 
 {
 	#endif
-	void save(char nombre[],char contra[]);
-	bool read(char nombre[], char contra[]);
-	bool comprobar(char nombre[]);
+	void save(Usuario u);
+	bool read(Usuario u);
+	bool comprobar(Usuario u);
 	#ifdef __cplusplus
 }
 #endif
