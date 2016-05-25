@@ -9,11 +9,17 @@
 
 using namespace std;
 
+
+
+
 class Gestor{
 
+	private:
+	sqlite3 *db = NULL;
 
+	public:
 
-
+		
 
 
 
