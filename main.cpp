@@ -14,6 +14,8 @@
 //#define false 0
 using namespace std;
 
+Gestor *gestor = new Gestor("basededatos.sqlite");
+
 
 void clear_if_needed(char *str)
 {
@@ -92,14 +94,9 @@ void accederUsuario(void)
 
     	switch(opcionUsuarioMetido)
     	{
-			case 1: imprimirCartelera(); 
-					cout<<"Elige una película"<<endl;
-					string elige;
-					cin>>elige;
-					gestorcliente gestorcli = new gestorcliente();
-					gestorcliente.InformacionCartelera(elige);
+			case 1: gestor->informacioncartelera();
 					break;
-			case 2: puntuar();
+			case 2: gestor->puntuar();
 					break;
 			case 3: menuUsuario();
 					break;

@@ -15,6 +15,10 @@ class Gestor{
 
 	private:
 	sqlite3 *db = NULL;
+	int asistencia;
+	float recaudacion;
+	float mediarecaudacion;
+
 
 	public:
 
@@ -28,6 +32,8 @@ class Gestor{
 		int buscarporgenero(char buscardos[]);
 		int buscarporanyo(char buscartres[]);
 		int crearTabla();
+		void puntuar();
+		void informacioncartelera();
 
 
 };

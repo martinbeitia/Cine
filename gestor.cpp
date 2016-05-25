@@ -528,52 +528,36 @@ int Gestor::mostrarPelis() {
 	}
 
 
+void Gestor::informacioncartelera()
+{
+	string eleccion;
 
-/*int main(void){
+	mostrarPelis();
+	cout<<"Elige una opcion:"<<endl;
+	cin>>eleccion;
 
-	cout<< "probando" << endl;
+	asistencia++; 
+	
+	recaudacion+=
 
-	Gestor *gestor= new Gestor("basededatos.sqlite");
-	char titulo[100] ;
-		char director[100] ;   
-		char actor[100] ;
-		int duracion;
-		char genero[100] ;
-		int anyo;
-		char fecha[100] ;
-		char hora[100] ;
-		int precio;
+}
 
-	char commandline[]  = "CREATE TABLE IF NOT EXISTS basededatos(titulo VARCHAR(10), director VARCHAR(10), actor VARCHAR(10), duracion INT, genero VARCHAR(10), anyo INT, fecha VARCHAR(10), hora VARCHAR(10), precio INT)";
-	sqlite3_stmt *stmt;
+void Gestor::puntuar()
+{
+	float puntuaciones;//sacar este dato de la base de datos.
+	float puntuacion;
 
-		
+	cout<<"Puntua el cine"<<endl;
+	cin>>puntuacion;
 
-		int result = sqlite3_prepare_v2(gestor->db, commandline, -1, &stmt, NULL) ;
-		if (result != SQLITE_OK) {
-			printf("Error preparing statement (CREATE)\n");
-			printf("%s\n", sqlite3_errmsg(gestor->db));
-			return result;
-		}
+	puntuaciones+=puntuacion;
+	//guardar en la base de datos puntuaciones;
 
-		printf("SQL query prepared (CREATE)\n");
+	//acceder a la base de datos y sacar las asistencias.
 
-		result = sqlite3_step(stmt);
-		if (result != SQLITE_DONE) {
-			printf("Error deleting data\n");
-			printf("%s\n", sqlite3_errmsg(gestor->db));
-			return result;
-		}
+	mediapuntuacion = puntuaciones/asistencias;
 
-		result = sqlite3_finalize(stmt);
-		if (result != SQLITE_OK) {
-			printf("Error finalizing statement (CREATE)\n");
-			printf("%s\n", sqlite3_errmsg(gestor->db));
-			return result;
-		}
+}
 
-		printf("Prepared statement finalized (CREATE)\n");
-	gestor->insertPeli("basededatos");
-	gestor->mostrarPelis();
-	return SQLITE_OK;
-}*/
+
+
