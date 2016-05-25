@@ -10,43 +10,37 @@
 
 using namespace std;
 
-class Gestor{
-
-//private:
-		
-public:
-
-sqlite3 *db = NULL;
-int insertPeli(string basededatos){
+//sqlite3 *db = NULL;
+int Gestor::insertPeli(){
 
 	sqlite3_stmt *stmt;
-	string titulo ;
-		string director ;   
-		string actor ;
-		int duracion;
-		string genero ;
-		int anyo;
-		string fecha ;
-		string hora ;
-		int precio;
+	string titulo;
+	string director;   
+	string actor;
+	int duracion;
+	string genero;
+	int anyo;
+	string fecha;
+	string hora;
+	int precio;
 
-	cout<<"Escribe el titulo de la pelicula"<<endl;
+	cout<<"Escribe el titulo de la pelicula:"<<endl;
 	cin>>titulo;
-	cout<<"Escribe el director de la pelicula"<<endl;
+	cout<<"Escribe el director de la pelicula:"<<endl;
 	cin>>director;
-	cout<<"Escribe el actor de la pelicula"<<endl;
+	cout<<"Escribe el actor de la pelicula:"<<endl;
 	cin>>actor;
-	cout<<"Escribe la duracion de la pelicula"<<endl;
+	cout<<"Escribe la duracion de la pelicula:"<<endl;
 	cin>>duracion;
-	cout<<"Escribe el genero de la pelicula"<<endl;
+	cout<<"Escribe el genero de la pelicula:"<<endl;
 	cin>>genero;
-	cout<<"Escribe el anyo de la pelicula"<<endl;
+	cout<<"Escribe el anyo de la pelicula:"<<endl;
 	cin>>anyo;
-	cout<<"Escribe la fecha de la pelicula"<<endl;
+	cout<<"Escribe la fecha de la pelicula:"<<endl;
 	cin>>fecha;
-	cout<<"Escribe la hora de la pelicula"<<endl;
+	cout<<"Escribe la hora de la pelicula:"<<endl;
 	cin>>hora;
-	cout<<"Escribe el precio de la pelicula"<<endl;
+	cout<<"Escribe el precio de la pelicula:"<<endl;
 	cin>>precio;
 
 
@@ -143,12 +137,14 @@ int insertPeli(string basededatos){
 
 }
 
-int borrarPeli(string borrar){
+int Gestor::borrarPeli(string borrar){
 	sqlite3_stmt *stmt;
 
-		char sentencia[] = "delete from basededatos where titulo=borrar";
+		char sentencia[] = "delete from basededatos where titulo=?";
 
-		int result = sqlite3_prepare_v2(db, sentencia, -1, &stmt, NULL) ;
+		
+
+		 int result = sqlite3_prepare_v2(db, sentencia, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (DELETE)\n");
 			printf("%s\n", sqlite3_errmsg(db));
@@ -156,6 +152,13 @@ int borrarPeli(string borrar){
 		}
 
 		printf("SQL query prepared (DELETE)\n");
+
+		 result = sqlite3_bind_text(stmt, 1, borrar.c_str(), borrar.length(), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
 
 		result = sqlite3_step(stmt);
 		if (result != SQLITE_DONE) {
@@ -176,7 +179,7 @@ int borrarPeli(string borrar){
 		return SQLITE_OK;
 }
 
-int mostrarPelis() {
+int Gestor::mostrarPelis() {
 		sqlite3_stmt *stmt;
 
 		char sql[] = "select * from basededatos";
@@ -221,7 +224,7 @@ int mostrarPelis() {
 				cout << "Actor: " << actor << endl;
 				cout << "Duracion (min.): " << duracion << endl;
 				cout << "Genero: " << genero << endl;
-				cout << "Año: " << anyo << endl;
+				cout << "Anyo: " << anyo << endl;
 				cout << "Fecha: " << fecha << endl;
 				cout << "Hora: " << hora << endl;
 				cout << "Precio (euros): " << precio << endl;
@@ -246,11 +249,11 @@ int mostrarPelis() {
 		return SQLITE_OK;
 	}
 
-	int buscarpordirector(char buscar[] ){
+	int Gestor::buscarpordirector(string buscar){
 
 		sqlite3_stmt *stmt;
 
-		char sql[] = "select * from basededatos where director=buscar";
+		char sql[] = "select * from basededatos where director=?";
 		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (SELECT)\n");
@@ -259,6 +262,13 @@ int mostrarPelis() {
 		}
 
 		printf("SQL query prepared (SELECT)\n");
+
+		 result = sqlite3_bind_text(stmt, 1, buscar.c_str(), buscar.length(), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
 
 		char titulo[100] ;
 		char director[100] ;   
@@ -314,11 +324,11 @@ int mostrarPelis() {
 		return SQLITE_OK;
 	}
 
-	int buscarporgenero(char buscardos[] ){
+	int Gestor::buscarporgenero(string buscardos){
 
 		sqlite3_stmt *stmt;
 
-		char sql[] = "select * from basededatos where genero=buscardos";
+		char sql[] = "select * from basededatos where genero=?";
 		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (SELECT)\n");
@@ -327,6 +337,13 @@ int mostrarPelis() {
 		}
 
 		printf("SQL query prepared (SELECT)\n");
+
+		 result = sqlite3_bind_text(stmt, 1, buscardos.c_str(), buscardos.length(), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
 
 		char titulo[100] ;
 		char director[100] ;   
@@ -340,7 +357,7 @@ int mostrarPelis() {
 
 		printf("\n");
 		printf("\n");
-		printf("Peliculas del genero %s: ",buscardos);
+		cout << "Peliculas del director/a: " << buscardos << endl;
 		printf("\n");
 		do {
 			result = sqlite3_step(stmt) ;
@@ -382,11 +399,11 @@ int mostrarPelis() {
 		return SQLITE_OK;
 	}
 
-	int buscarporanyo(char buscartres[] ){
+	int Gestor::buscarporanyo(string buscartres){
 
 		sqlite3_stmt *stmt;
 
-		char sql[] = "select * from basededatos where anyo=buscartres";
+		char sql[] = "select * from basededatos where anyo=?";
 		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (SELECT)\n");
@@ -395,6 +412,13 @@ int mostrarPelis() {
 		}
 
 		printf("SQL query prepared (SELECT)\n");
+
+		 result = sqlite3_bind_text(stmt, 1, buscartres.c_str(), buscartres.length(), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
 
 		char titulo[100] ;
 		char director[100] ;   
@@ -408,7 +432,7 @@ int mostrarPelis() {
 
 		printf("\n");
 		printf("\n");
-		printf("Peliculas del año %s: ", buscartres);
+		cout << "Peliculas del director/a: " << buscartres << endl;
 		printf("\n");
 		do {
 			result = sqlite3_step(stmt) ;
@@ -450,7 +474,7 @@ int mostrarPelis() {
 		return SQLITE_OK;
 	}
 
-	int crearTabla(){
+	int Gestor::crearTabla(){
 
 		Gestor *gestor= new Gestor("basededatos.sqlite");
 
@@ -487,7 +511,7 @@ int mostrarPelis() {
 
 	}
 
-	Gestor(string dbFile) {
+	Gestor::Gestor(string dbFile) {
 		int result = sqlite3_open("basededatos.sqlite", &db);
 		if (result != SQLITE_OK) {
 			printf("Error opening database\n");
@@ -495,7 +519,7 @@ int mostrarPelis() {
 		}
 	}
 
-	~Gestor() {
+	Gestor::~Gestor() {
 		int result = sqlite3_close(db);
 		if (result != SQLITE_OK) {
 			printf("Error opening database\n");
@@ -503,7 +527,7 @@ int mostrarPelis() {
 		}	
 	}
 
-};
+
 
 /*int main(void){
 
