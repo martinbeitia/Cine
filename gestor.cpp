@@ -25,24 +25,35 @@ int Gestor::insertPeli(){
 	int precio;
 
 	cout<<"Escribe el titulo de la pelicula:"<<endl;
-	cin>>titulo;
+	getline(cin, titulo);
 	cout<<"Escribe el director de la pelicula:"<<endl;
-	cin>>director;
+	getline(cin, director);
 	cout<<"Escribe el actor de la pelicula:"<<endl;
-	cin>>actor;
+	getline(cin, actor);
 	cout<<"Escribe la duracion de la pelicula:"<<endl;
 	cin>>duracion;
+	if(!std::cin) // or if(cin.fail())
+	{
+	    std::cout << "No es un numero!" << std::endl; 
+	    std::cin.clear(); // reset failbit
+	    std::cin.ignore();
+	    elec_cod_plan=3;
+	    // next, request user reinput
+	}
+	else
+	{
+
 	cout<<"Escribe el genero de la pelicula:"<<endl;
-	cin>>genero;
+	getline(cin, genero);
 	cout<<"Escribe el anyo de la pelicula:"<<endl;
 	cin>>anyo;
 	cout<<"Escribe la fecha de la pelicula:"<<endl;
-	cin>>fecha;
+	getline(cin, fecha);
 	cout<<"Escribe la hora de la pelicula:"<<endl;
-	cin>>hora;
+	getline(cin, hora);
 	cout<<"Escribe el precio de la pelicula:"<<endl;
 	cin>>precio;
-
+	}
 
 	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
