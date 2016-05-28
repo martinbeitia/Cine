@@ -68,7 +68,7 @@ int menuUsuarioDentro()
 	char num[MAX];
 
 	printf("1.Cartelera.\n\n");
-	printf("2.Puntuar pelicula.\n\n");
+	printf("2.Puntuar cine.\n\n");
 	printf("3.Salir.\n\n");
 	printf( "\n\n   Introduzca opcion (1-3): ", 162 );
 
@@ -113,13 +113,17 @@ void accederUsuario(void)
 
     	switch(opcionUsuarioMetido)
     	{
-			case 1: gestor->mostrarPelis();
-					break;
-			case 2:	gestor->puntuar();
-					break;
-			case 3: menuUsuario();
-					break;
-			default: printf("Introduzca una opcion valida. \n\n"); break;
+			case 1: {gestor->mostrarPelis();
+					string eleccion;
+					cout<<"Elija que pelicula quiere ver: ";
+					cin>>eleccion;
+					gestor->aumentarAsistencia(eleccion);
+					break;}
+			case 2:	{gestor->puntuar();
+					break;}
+			case 3: {menuUsuario();break;}
+					
+			default: {printf("Introduzca una opcion valida. \n\n"); break;}
     	}
 	}
 	 else 
@@ -256,8 +260,9 @@ void accederAdmin()
 			        fgets(num,MAX,stdin);
 					clear_if_needed(num);
 					sscanf(num, "%d", &otraOpcion);
-					if(otraOpcion==1)
+					if(otraOpcion==1){
 					gestor->insertPeli();
+					}
 					if(otraOpcion==2){
 						string titulo;
 						gestor->mostrarPelis();
@@ -265,7 +270,7 @@ void accederAdmin()
 						cin>>titulo;
 						gestor->borrarPeli(titulo);
 					}	
-					else cout<<"Opcion no valida"<<endl;
+					if(otraOpcion!=1 && otraOpcion!=2) cout<<"Opcion no valida"<<endl;
 					break;
 				case 2: opcionBuscar = menuBuscar();
 						switch(opcionBuscar)
@@ -312,6 +317,8 @@ int main(void)
 	int metidas=0;
 	
 	char str[MAX_LENGHT];
+
+	gestor->crearTabla();
 	
 	
 	printf("Bienvenido a A-TEAM STUDIOS.\n En la siguiente aplicacion podran realizar acciones relacionadas con nuestro cine.\n Disfrutenlo =D\n");

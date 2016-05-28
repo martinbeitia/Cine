@@ -41,21 +41,18 @@ int Gestor::insertPeli(){
 	getline(cin, director);
 	cout<<"Escribe el actor de la pelicula:"<<endl;
 	getline(cin, actor);
-	cout<<"Escribe la duracion de la pelicula:"<<endl;
-	cin>>duracion;
 	cout<<"Escribe el genero de la pelicula:"<<endl;
 	getline(cin, genero);
-	cout<<"Escribe el anyo de la pelicula:"<<endl;
-	cin>>anyo;
 	cout<<"Escribe la fecha de la pelicula:"<<endl;
 	getline(cin, fecha);
 	cout<<"Escribe la hora de la pelicula:"<<endl;
 	getline(cin, hora);
+	cout<<"Escribe la duracion de la pelicula:"<<endl;
+	cin>>duracion;
+	cout<<"Escribe el anyo de la pelicula:"<<endl;
+	cin>>anyo;
 	cout<<"Escribe el precio de la pelicula:"<<endl;
 	cin>>precio;
-
-	
-
 	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio, asistencia) values (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 
 	int result = sqlite3_prepare_v2(db, sentencia, strlen(sentencia)+1, &stmt, NULL) ;
@@ -551,22 +548,10 @@ int Gestor::mostrarPelis() {
 	}
 
 
-/*void Gestor::informacioncartelera()
-{
-	string eleccion;
-
-	mostrarPelis();
-	cout<<"Elige una opcion:"<<endl;
-	cin>>eleccion;
-
-	asistencia++; 
-	
-	recaudacion+=
-
-}*/
 
 void Gestor::puntuar()
 {
+
 	float puntuacion;
 	float puntuacionf;
 
@@ -582,14 +567,24 @@ void Gestor::puntuar()
 		}
 	else
 		{
+
+			cout << "Pulse intro"<<endl;
 			char str[10];
+			file=fopen("Puntuaciones.txt","r");
 
 			while(fgets(str,10,file)!=NULL)
 			{
 				clear_if_neededotro(str);
+
 				sscanf(str,"%f",&puntuacionf);
 			}
+			fclose(file);
+			
+			file=fopen("Puntuaciones.txt","w");
+			cout<<"Como valorarias A team studios: ";
+			cin>>puntuacion;
 			puntuacionf += puntuacion;	
+			fprintf(file,"%f",puntuacionf);
 		}
 		fclose(file);
 }
