@@ -1,6 +1,6 @@
 #include <stdio.h> //PROYECTO
 #include "save.h"
-#include "Pelicula.h"
+#include "pelicula.h"
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
@@ -28,13 +28,13 @@ class Gestor{
 		int insertPeli();
 		int borrarPeli(string borrar);
 		int mostrarPelis();
-		int buscarpordirector(char buscar[]);
-		int buscarporgenero(char buscardos[]);
-		int buscarporanyo(char buscartres[]);
+		int buscarpordirector(string buscar);
+		int buscarporgenero(string buscardos);
+		int buscarporanyo(string buscartres);
 		int crearTabla();
 		void puntuar();
 		void informacioncartelera();
-		int aumentarAsistencia(char titulo[]);
+		int aumentarAsistencia(string titulo);
 		int devolverAsistencia();
 
 

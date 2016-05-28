@@ -1,20 +1,29 @@
 #include <stdio.h> //PROYECTO
 #include "save.h"
-#include "Pelicula.h"
+#include "pelicula.h"
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
 #include <string>
 #include "sqlite3.h"
 #include "gestor.h"
-
 using namespace std;
 
 //sqlite3 *db = NULL;
+void clear_if_neededotro(char *str)
+{
+    if (str[strlen(str) - 1] != '\n')
+    {
+        int c;    
+        while ( (c = getchar()) != EOF && c != '\n');
+    }
+}
+
+
 int Gestor::insertPeli(){
 
 	sqlite3_stmt *stmt;
-	Pelicula p();
+	
 	string titulo;
 	string director;   
 	string actor;
@@ -34,17 +43,6 @@ int Gestor::insertPeli(){
 	getline(cin, actor);
 	cout<<"Escribe la duracion de la pelicula:"<<endl;
 	cin>>duracion;
-	//if(!std::cin) // or if(cin.fail())
-	//{
-	    //std::cout << "No es un numero!" << std::endl; 
-	   // std::cin.clear(); // reset failbit
-	    //std::cin.ignore();
-	    //elec_cod_plan=3;
-	    // next, request user reinput
-	//}
-	//else
-	//{
-
 	cout<<"Escribe el genero de la pelicula:"<<endl;
 	getline(cin, genero);
 	cout<<"Escribe el anyo de la pelicula:"<<endl;
@@ -55,9 +53,8 @@ int Gestor::insertPeli(){
 	getline(cin, hora);
 	cout<<"Escribe el precio de la pelicula:"<<endl;
 	cin>>precio;
-	//cout<<"Escribe la asistencia de la pelicula:"<<endl;
-	//cin>>asistencia;
-	//}
+
+	
 
 	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio, asistencia) values (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 
@@ -554,7 +551,7 @@ int Gestor::mostrarPelis() {
 	}
 
 
-void Gestor::informacioncartelera()
+/*void Gestor::informacioncartelera()
 {
 	string eleccion;
 
@@ -566,26 +563,38 @@ void Gestor::informacioncartelera()
 	
 	recaudacion+=
 
-}
+}*/
 
 void Gestor::puntuar()
 {
-	float puntuaciones;//sacar este dato de la base de datos.
 	float puntuacion;
+	float puntuacionf;
 
-	cout<<"Puntua el cine"<<endl;
-	cin>>puntuacion;
+	FILE* file;
+		
+	file=fopen("Puntuaciones.txt","r");
+	if(file==NULL)
+		{
+			file=fopen("Puntuaciones.txt","w");
+			cout<<"Como valorarias A team studios: ";
+			cin>>puntuacion;
+			fprintf(file,"%f",puntuacion);
+		}
+	else
+		{
+			char str[10];
 
-	puntuaciones+=puntuacion;
-	//guardar en la base de datos puntuaciones;
-
-	//acceder a la base de datos y sacar las asistencias.
-
-	mediapuntuacion = puntuaciones/asistencias;
-
+			while(fgets(str,10,file)!=NULL)
+			{
+				clear_if_neededotro(str);
+				sscanf(str,"%f",&puntuacionf);
+			}
+			puntuacionf += puntuacion;	
+		}
+		fclose(file);
 }
 
-int Gestor::aumentarAsistencia(char titulo[]){
+int Gestor::aumentarAsistencia(string titulo){
 
 	sqlite3_stmt *stmt;
 

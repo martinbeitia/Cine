@@ -56,7 +56,7 @@ void accederUsuario(void)
 	char *nombre;
 	char *contra;
 	char str[MAX_LENGHT];
-	bool exist;
+	int exist;
 	int opcionUsuarioMetido;
 
 	
@@ -78,7 +78,7 @@ void accederUsuario(void)
 	exist=read(u);
 	free(nombre);
 	free(contra);
-	if(exist==true)
+	if(exist==1)
 	{
 		opcionUsuarioMetido = menuUsuarioDentro();
 
@@ -119,7 +119,7 @@ int crearCuenta()
 	char *nombre;
 	char *contra;
 	char str[MAX_LENGHT];
-	bool add;
+	int add;
 
 	printf("Escriba el nombre de usuario. \n");
 	fgets(str,MAX_LENGHT,stdin);
@@ -135,7 +135,7 @@ int crearCuenta()
 
 	Usuario u={nombre,contra};
 	add=comprobar(u);
-	if(add==true)
+	if(add==1)
 	{
     	save(u);
     	free(nombre);

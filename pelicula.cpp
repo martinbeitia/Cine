@@ -1,6 +1,7 @@
 #include "Pelicula.h"
 #include <string>
 #include "sqlite3.h"
+
 using namespace std;
 
  Pelicula::Pelicula(string titulo, string director, string actor, int duracion, string genero, int anyo, string  fecha, string  hora, int precio, int asistencia)
@@ -58,7 +59,7 @@ int Pelicula::getAsistencia() const
 	return this->asistencia;
 }
 
-void setTitulo(string tituloset){
+/*void setTitulo(string tituloset){
 	this->titulo=tituloset;
 }
 void setDirector(string directorset){
@@ -87,7 +88,7 @@ void setPrecio(int precioset){
 }
 void setAsistencia(int asistenciaset){
 	this->asistencia=asistenciaset;
-}
+}*/
 
 Pelicula::~Pelicula(){
 

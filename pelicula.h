@@ -1,7 +1,10 @@
+#ifndef _PELICULA_H_
+#define _PELICULA_H_
 #include <iostream>
 #include <string>
 #include "sqlite3.h"
 
+using namespace std;
 class Pelicula{
 private:
 	std::string titulo;
@@ -31,7 +34,7 @@ public:
 	std::string  getFecha() const;
 	std::string  getHora() const;
 	int getAsistencia() const;
-	void setTitulo(string tituloset);
+	/*void setTitulo(string tituloset);
 	void setDirector(string directorset);
 	void setActor(string actorset);
 	void setDuracion(int duracionset);
@@ -40,7 +43,8 @@ public:
 	void setFecha(string fechaset);
 	void setHora(string horaset);
 	void setPrecio(int precioset);
-	void setAsistencia(int asistenciaset);
+	void setAsistencia(int asistenciaset);*/
 
 
 };
+#endif

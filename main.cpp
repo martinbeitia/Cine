@@ -1,14 +1,15 @@
 #include <stdio.h> //PROYECTO
 #include "save.h"
-#include "Pelicula.h"
+#include "pelicula.h"
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
 #include <string>
 #include "sqlite3.h"
-#include "gestorcliente.h"
+#include "gestor.h"
 #define MAX_LENGHT 20
 #define MAX 2
+#define MAX_FILM 10
 //typedef int bool;
 //#define true 1
 //#define false 0
@@ -61,13 +62,31 @@ int menuUsuario(void)
 
 }
 
+int menuUsuarioDentro()
+{
+	int optionUsuarioMetido;
+	char num[MAX];
+
+	printf("1.Cartelera.\n\n");
+	printf("2.Puntuar pelicula.\n\n");
+	printf("3.Salir.\n\n");
+	printf( "\n\n   Introduzca opcion (1-3): ", 162 );
+
+	fgets(num,MAX,stdin);
+	clear_if_needed(num);
+	sscanf(num, "%d", &optionUsuarioMetido);
+
+	return optionUsuarioMetido;
+}
+
 void accederUsuario(void)
 {
 	char *nombre;
 	char *contra;
 	char str[MAX_LENGHT];
-	bool exist;
+	int exist;
 	int opcionUsuarioMetido;
+	float num;
 
 	
 	printf("Escriba el nombre de usuario. \n");
@@ -88,15 +107,15 @@ void accederUsuario(void)
 	exist=read(u);
 	free(nombre);
 	free(contra);
-	if(exist==true)
+	if(exist==1)
 	{
 		opcionUsuarioMetido = menuUsuarioDentro();
 
     	switch(opcionUsuarioMetido)
     	{
-			case 1: gestor->informacioncartelera();
+			case 1: gestor->mostrarPelis();
 					break;
-			case 2: gestor->puntuar();
+			case 2:	gestor->puntuar();
 					break;
 			case 3: menuUsuario();
 					break;
@@ -110,29 +129,14 @@ void accederUsuario(void)
     	
 }
 
-int menuUsuarioDentro()
-{
-	int optionUsuarioMetido;
-	char num[MAX];
 
-	printf("1.Cartelera.\n\n");
-	printf("2.Puntuar pelicula.\n\n");
-	printf("3.Salir.\n\n");
-	printf( "\n\n   Introduzca opcion (1-3): ", 162 );
-
-	fgets(num,MAX,stdin);
-	clear_if_needed(num);
-	sscanf(num, "%d", &optionUsuarioMetido);
-
-	return optionUsuarioMetido;
-}
 
 int crearCuenta()
 {
 	char *nombre;
 	char *contra;
 	char str[MAX_LENGHT];
-	bool add;
+	int add;
 
 	printf("Escriba el nombre de usuario. \n");
 	fgets(str,MAX_LENGHT,stdin);
@@ -148,7 +152,7 @@ int crearCuenta()
 
 	Usuario u={nombre,contra};
 	add=comprobar(u);
-	if(add==true)
+	if(add==1)
 	{
     	save(u);
     	free(nombre);
@@ -196,6 +200,24 @@ int menuAdminDentro()
 
 }
 
+int menuBuscar()
+{
+	char num[MAX];
+	int optionAdminBusqueda;
+
+	printf("1.Buscar por anyo.\n");
+	printf("2.Buscar por director.\n\n");
+	printf("3.Buscar por genero.\n\n");
+	printf("4.Atras\n\n");
+
+	fgets(num,MAX,stdin);
+	clear_if_needed(num);
+	sscanf(num, "%d", &optionAdminBusqueda);
+
+	return optionAdminBusqueda;
+
+}
+
 void accederAdmin()
 {
 	char *nombre;
@@ -203,7 +225,11 @@ void accederAdmin()
 	char str[MAX_LENGHT];
 	char num[MAX];
 	int opcionAdminMetido;
-
+	int otraOpcion;
+	string anyo;
+	string director;
+	string genero;
+	int opcionBuscar;
 	
 	printf("Escriba el nombre del administrador. \n");
 	fgets(str,MAX_LENGHT,stdin);
@@ -226,20 +252,46 @@ void accederAdmin()
 
 			switch(opcionAdminMetido){
 				case 1:
-					cout<<"1-Añadir  2-quitar"<<endl;
+					cout<<"1-Añadir / 2-Quitar"<<endl;
 			        fgets(num,MAX,stdin);
 					clear_if_needed(num);
 					sscanf(num, "%d", &otraOpcion);
 					if(otraOpcion==1)
-					insertPeli(a,metidas);
-					if(otraOpcion==2)
-					quitarPeli(a,metidas);
+					gestor->insertPeli();
+					if(otraOpcion==2){
+						string titulo;
+						gestor->mostrarPelis();
+						cout<<"Inserta el nombre de la pelicula a borrar: ";
+						cin>>titulo;
+						gestor->borrarPeli(titulo);
+					}	
 					else cout<<"Opcion no valida"<<endl;
 					break;
-				case 2: break;
-				case 3: break;
-				case 4: break;
-				case 5: break;
+				case 2: opcionBuscar = menuBuscar();
+						switch(opcionBuscar)
+						{
+							case 1: 
+									cout<<"Introduce un anyo: "<<endl;
+									cin>>anyo;					
+									gestor->buscarporanyo(anyo);
+									break;
+							case 2: 
+									cout<<"Introduce un director: "<<endl;
+									cin>>director;					
+									gestor->buscarpordirector(director);
+									break;
+							case 3: 
+									cout<<"Introduce un genero: "<<endl;
+									cin>>genero;					
+									gestor->buscarporgenero(genero);
+									break;
+							
+							default: cout << "Esa opcion no es valida"; break;
+						}
+				break;
+				case 3: cout<<"Hola";break;
+				case 4: cout<<"Hola";break;
+				case 5: cout<<"Hola";break;
 				default: printf("Introduzca una opcion valida. \n\n"); break;
 			}
 	}
@@ -252,18 +304,12 @@ void accederAdmin()
 	free(contra);
 }
 
-void imprimirCartelera()
-{
-
-	//imprime cartelera.
-}
-
-
 int main(void)
 {
 	int opcion;
 	int opcionUsuario;
 	int opcionAdmin;
+	int metidas=0;
 	
 	char str[MAX_LENGHT];
 	

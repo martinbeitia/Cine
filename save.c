@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "sqlite3.h"
-typedef int bool;
+//typedef int bool;
 //#define true 1
 //#define false 0
 void save(Usuario u)
@@ -14,7 +14,7 @@ void save(Usuario u)
 	fclose(fp);
 
 }
-bool comprobar(Usuario u)
+int comprobar(Usuario u)
 {
 	FILE * fp;
 	fp=fopen("Usuario.txt","r");
@@ -23,7 +23,7 @@ bool comprobar(Usuario u)
 	int a;
 	char name [100];
 	if(fp==NULL)
-		return true;
+		return 1;
 	else
 	{
 		while (fgets(c,100,fp)!=NULL)	
@@ -39,13 +39,13 @@ bool comprobar(Usuario u)
 			i++;
 		}
 		if(a==1)
-			return false;
-		else return true;
+			return 0;
+		else return 1;
 	}
 	fclose(fp);	
 }
 
-bool read(Usuario u)
+int read(Usuario u)
 {
 	FILE * fp;
 	fp=fopen("Usuario.txt","r");
@@ -81,9 +81,9 @@ bool read(Usuario u)
 		i++;		
 	}
 	if(a==1 && b==1 && e-d==1)
-	return true;
+	return 1;
 			
-	else return false;
+	else return 0;
 		
     fclose(fp);
 }
