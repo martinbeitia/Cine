@@ -14,6 +14,7 @@ using namespace std;
 int Gestor::insertPeli(){
 
 	sqlite3_stmt *stmt;
+	Pelicula p();
 	string titulo;
 	string director;   
 	string actor;
@@ -23,6 +24,7 @@ int Gestor::insertPeli(){
 	string fecha;
 	string hora;
 	int precio;
+	//int asistencia;
 
 	cout<<"Escribe el titulo de la pelicula:"<<endl;
 	getline(cin, titulo);
@@ -32,16 +34,16 @@ int Gestor::insertPeli(){
 	getline(cin, actor);
 	cout<<"Escribe la duracion de la pelicula:"<<endl;
 	cin>>duracion;
-	if(!std::cin) // or if(cin.fail())
-	{
-	    std::cout << "No es un numero!" << std::endl; 
-	    std::cin.clear(); // reset failbit
-	    std::cin.ignore();
-	    elec_cod_plan=3;
+	//if(!std::cin) // or if(cin.fail())
+	//{
+	    //std::cout << "No es un numero!" << std::endl; 
+	   // std::cin.clear(); // reset failbit
+	    //std::cin.ignore();
+	    //elec_cod_plan=3;
 	    // next, request user reinput
-	}
-	else
-	{
+	//}
+	//else
+	//{
 
 	cout<<"Escribe el genero de la pelicula:"<<endl;
 	getline(cin, genero);
@@ -53,9 +55,11 @@ int Gestor::insertPeli(){
 	getline(cin, hora);
 	cout<<"Escribe el precio de la pelicula:"<<endl;
 	cin>>precio;
-	}
+	//cout<<"Escribe la asistencia de la pelicula:"<<endl;
+	//cin>>asistencia;
+	//}
 
-	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio, asistencia) values (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 
 	int result = sqlite3_prepare_v2(db, sentencia, strlen(sentencia)+1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
@@ -213,6 +217,7 @@ int Gestor::mostrarPelis() {
 		char fecha[100] ;
 		char hora[100] ;
 		int precio;
+		int asistencia;
 
 		printf("\n");
 		printf("\n");
@@ -229,6 +234,7 @@ int Gestor::mostrarPelis() {
 				strcpy(fecha, (char *) sqlite3_column_text(stmt, 6));
 				strcpy(hora, (char *) sqlite3_column_text(stmt, 7));
 				precio = sqlite3_column_int(stmt, 8);
+				asistencia = sqlite3_column_int(stmt, 9);
 
 				cout << "Titulo: " << titulo << endl;
 				cout << "Director: " << director << endl;
@@ -239,6 +245,7 @@ int Gestor::mostrarPelis() {
 				cout << "Fecha: " << fecha << endl;
 				cout << "Hora: " << hora << endl;
 				cout << "Precio (euros): " << precio << endl;
+				cout << "Asistencia: " << asistencia << endl;
 				cout << "----------------------------" << endl;
 				
 				
@@ -290,6 +297,7 @@ int Gestor::mostrarPelis() {
 		char fecha[100] ;
 		char hora[100] ;
 		int precio;
+		int asistencia;
 
 		printf("\n");
 		printf("\n");
@@ -307,6 +315,7 @@ int Gestor::mostrarPelis() {
 				strcpy(fecha, (char *) sqlite3_column_text(stmt, 6));
 				strcpy(hora, (char *) sqlite3_column_text(stmt, 7));
 				precio = sqlite3_column_int(stmt, 8);
+				asistencia = sqlite3_column_int(stmt, 9);
 
 				cout << "Titulo: " << titulo << endl;
 				cout << "Director: " << director << endl;
@@ -317,6 +326,7 @@ int Gestor::mostrarPelis() {
 				cout << "Fecha: " << fecha << endl;
 				cout << "Hora: " << hora << endl;
 				cout << "Precio (euros): " << precio << endl;
+				cout << "Asistencia: " << asistencia << endl;
 				cout << "----------------------------" << endl;
 			}
 		} while (result == SQLITE_ROW);
@@ -365,6 +375,7 @@ int Gestor::mostrarPelis() {
 		char fecha[100] ;
 		char hora[100] ;
 		int precio;
+		int asistencia;
 
 		printf("\n");
 		printf("\n");
@@ -382,6 +393,7 @@ int Gestor::mostrarPelis() {
 				strcpy(fecha, (char *) sqlite3_column_text(stmt, 6));
 				strcpy(hora, (char *) sqlite3_column_text(stmt, 7));
 				precio = sqlite3_column_int(stmt, 8);
+				asistencia = sqlite3_column_int(stmt, 9);
 
 				cout << "Titulo: " << titulo << endl;
 				cout << "Director: " << director << endl;
@@ -392,6 +404,7 @@ int Gestor::mostrarPelis() {
 				cout << "Fecha: " << fecha << endl;
 				cout << "Hora: " << hora << endl;
 				cout << "Precio (euros): " << precio << endl;
+				cout << "Asistencia: " << asistencia << endl;
 				cout << "----------------------------" << endl;
 			}
 		} while (result == SQLITE_ROW);
@@ -440,6 +453,7 @@ int Gestor::mostrarPelis() {
 		char fecha[100] ;
 		char hora[100] ;
 		int precio;
+		int asistencia;
 
 		printf("\n");
 		printf("\n");
@@ -457,6 +471,7 @@ int Gestor::mostrarPelis() {
 				strcpy(fecha, (char *) sqlite3_column_text(stmt, 6));
 				strcpy(hora, (char *) sqlite3_column_text(stmt, 7));
 				precio = sqlite3_column_int(stmt, 8);
+				asistencia = sqlite3_column_int(stmt, 9);
 
 				cout << "Titulo: " << titulo << endl;
 				cout << "Director: " << director << endl;
@@ -489,7 +504,7 @@ int Gestor::mostrarPelis() {
 
 		Gestor *gestor= new Gestor("basededatos.sqlite");
 
-		char commandline[]  = "CREATE TABLE IF NOT EXISTS basededatos(titulo VARCHAR(30), director VARCHAR(30), actor VARCHAR(30), duracion INT, genero VARCHAR(15), anyo INT, fecha VARCHAR(10), hora VARCHAR(10), precio INT)";
+		char commandline[]  = "CREATE TABLE IF NOT EXISTS basededatos(titulo VARCHAR(30), director VARCHAR(30), actor VARCHAR(30), duracion INT, genero VARCHAR(15), anyo INT, fecha VARCHAR(10), hora VARCHAR(10), precio INT, asistencia INT)";
 		sqlite3_stmt *stmt;
 
 		
@@ -567,6 +582,45 @@ void Gestor::puntuar()
 	//acceder a la base de datos y sacar las asistencias.
 
 	mediapuntuacion = puntuaciones/asistencias;
+
+}
+
+int Gestor::aumentarAsistencia(char titulo[]){
+
+	sqlite3_stmt *stmt;
+
+		char sql[] = "update basededatos  set asistencia = asistencia +1 where titulo=?";
+		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement (UPDATE)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("SQL query prepared (UPDATE)\n");
+
+		 result = sqlite3_bind_text(stmt, 1, titulo.c_str(), titulo.length(), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+		result = sqlite3_finalize(stmt);
+		if (result != SQLITE_OK) {
+			printf("Error finalizing statement (UPDATE)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("Prepared statement finalized (UPDATE)\n");
+		return SQLITE_OK;
+}
+
+int Gestor::devolverAsistencia(){
+
+	sqlite3_stmt *stmt;
+
+	char sql[] = "select sum(asistencia) from basededatos";
 
 }
 

@@ -7,16 +7,17 @@ private:
 	std::string titulo;
 	std::string director;
 	std::string actor;
-	float duracion;
+	int duracion;
 	std::string genero;
 	int anyo;
-	float precio;
-	int fecha;
-	int hora;
+	int precio;
+	string fecha;
+	string hora;
+	int asistencia;
 
 public:
 
-	Pelicula(std::string titulo, std::string director, std::string actor, int duracion, std::string genero, int anyo,  std::string  fecha, std::string  hora, int precio,);
+	Pelicula(std::string titulo, std::string director, std::string actor, int duracion, std::string genero, int anyo,  std::string  fecha, std::string  hora, int precio, int asistencia);
 
 	~Pelicula();
 
@@ -29,7 +30,17 @@ public:
 	int getPrecio() const;
 	std::string  getFecha() const;
 	std::string  getHora() const;
-
+	int getAsistencia() const;
+	void setTitulo(string tituloset);
+	void setDirector(string directorset);
+	void setActor(string actorset);
+	void setDuracion(int duracionset);
+	void setGenero(string generoset);
+	void setAnyo(string anyoset);
+	void setFecha(string fechaset);
+	void setHora(string horaset);
+	void setPrecio(int precioset);
+	void setAsistencia(int asistenciaset);
 
 
 };
