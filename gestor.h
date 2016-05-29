@@ -15,9 +15,7 @@ class Gestor{
 
 	private:
 	sqlite3 *db = NULL;
-	int asistenciacine;
-	float recaudacion;
-	float mediarecaudacion;
+	
 
 
 	public:
@@ -35,7 +33,14 @@ class Gestor{
 		void puntuar();
 		void informacioncartelera();
 		int aumentarAsistencia(string titulo);
+		int actualizarAsistencia(string titulodos);
 		int devolverAsistencia();
+		void guardarAsistencia();
+		int consultarAsistencia();
+		int sacarPrecio(string titulotres);
+		void guardarRecaudacion(string titulocuatro);
+		int consultarRecaudacion();
+
 
 
 };

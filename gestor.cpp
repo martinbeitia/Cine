@@ -33,7 +33,7 @@ int Gestor::insertPeli(){
 	string fecha;
 	string hora;
 	int precio;
-	//int asistencia;
+	int asistencia;
 
 	cout<<"Escribe el titulo de la pelicula:"<<endl;
 	getline(cin, titulo);
@@ -53,7 +53,9 @@ int Gestor::insertPeli(){
 	cin>>anyo;
 	cout<<"Escribe el precio de la pelicula:"<<endl;
 	cin>>precio;
-	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio, asistencia) values (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
+	cout<<"Escribe la asistencia esperada de la pelicula:"<<endl;
+	cin>>asistencia;
+	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio, asistencia) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	int result = sqlite3_prepare_v2(db, sentencia, strlen(sentencia)+1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
@@ -121,6 +123,12 @@ int Gestor::insertPeli(){
 		}
 
 		result = sqlite3_bind_int(stmt, 9, precio);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+		result = sqlite3_bind_int(stmt, 10, asistencia);
 		if (result != SQLITE_OK) {
 			printf("Error binding parameters\n");
 			printf("%s\n", sqlite3_errmsg(db));
@@ -592,8 +600,49 @@ void Gestor::puntuar()
 int Gestor::aumentarAsistencia(string titulo){
 
 	sqlite3_stmt *stmt;
+	int actualizar;
+	char sentencia[] = "select asistencia from basededatos where titulo=?";
+	int result = sqlite3_prepare_v2(db, sentencia, -1, &stmt, NULL) ;
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
 
-		char sql[] = "update basededatos  set asistencia = asistencia +1 where titulo=?";
+		printf("SQL query prepared (SELECT)\n");
+
+		 result = sqlite3_bind_text(stmt, 1, titulo.c_str(), titulo.length(), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		
+		do {
+			result = sqlite3_step(stmt) ;
+			if (result == SQLITE_ROW) {
+				actualizar = sqlite3_column_int(stmt, 9);
+				actualizar++;
+			}
+		} while (result == SQLITE_ROW);
+		result = sqlite3_finalize(stmt);
+		if (result != SQLITE_OK) {
+			printf("Error finalizing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("Prepared statement finalized (SELECT)\n");
+		
+		return actualizar;
+}
+
+int Gestor::actualizarAsistencia(string titulo){
+
+		sqlite3_stmt *stmt;
+		int meter = aumentarAsistencia(titulo);
+		char sql[] = "update basededatos  set asistencia=? where titulo=?";
 		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (UPDATE)\n");
@@ -602,8 +651,14 @@ int Gestor::aumentarAsistencia(string titulo){
 		}
 
 		printf("SQL query prepared (UPDATE)\n");
+		result = sqlite3_bind_int(stmt, 1, meter);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
 
-		 result = sqlite3_bind_text(stmt, 1, titulo.c_str(), titulo.length(), SQLITE_STATIC);
+		 result = sqlite3_bind_text(stmt, 2, titulo.c_str(), titulo.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
 			printf("Error binding parameters\n");
 			printf("%s\n", sqlite3_errmsg(db));
@@ -617,16 +672,204 @@ int Gestor::aumentarAsistencia(string titulo){
 		}
 
 		printf("Prepared statement finalized (UPDATE)\n");
-		return SQLITE_OK;
-}
 
-int Gestor::devolverAsistencia(){
+return SQLITE_OK;
+	}
+
+/*int Gestor::devolverAsistencia(){
 
 	sqlite3_stmt *stmt;
 
 	char sql[] = "select sum(asistencia) from basededatos";
 
+}*/
+
+void Gestor::guardarAsistencia(){
+
+	int asistencia =1;
+	int asistenciaf;
+	char str[10];
+
+	FILE* file;
+		
+	file=fopen("Asistenciatotal.txt","r");
+	if(file==NULL)
+		{
+			file=fopen("Asistenciatotal.txt","w");
+			fprintf(file,"%i",asistencia);
+		}
+	else
+		{
+
+			//cout << "Pulse intro"<<endl;
+			char str[10];
+			file=fopen("Asistenciatotal.txt","r");
+
+			while(fgets(str,10,file)!=NULL)
+			{
+				clear_if_neededotro(str);
+
+				sscanf(str,"%i",&asistenciaf);
+				asistenciaf++;	
+			}
+			fclose(file);
+			
+			file=fopen("Asistenciatotal.txt","w");
+			
+			fprintf(file,"%i",asistenciaf);
+		}
+		fclose(file);
+
+
 }
 
+int Gestor::consultarAsistencia(){
 
 
+	int asistencia;
+	char str[10];
+
+	FILE* file;
+		
+	file=fopen("Asistenciatotal.txt","r");
+	if(file==NULL)
+		{
+			cout << "Todavia no ha habido visitas" <<endl;
+		}
+	else
+		{
+
+			cout << "Pulse intro"<<endl;
+			char str[10];
+			file=fopen("Asistenciatotal.txt","r");
+
+			while(fgets(str,10,file)!=NULL)
+			{
+				clear_if_neededotro(str);
+
+				sscanf(str,"%i",&asistencia);
+				
+			}
+			
+			
+			
+		}
+		fclose(file);
+
+
+	return asistencia;
+}
+
+int Gestor::sacarPrecio(string titulo){
+
+	sqlite3_stmt *stmt;
+	int actualizar;
+	char sentencia[] = "select precio from basededatos where titulo=?";
+	int result = sqlite3_prepare_v2(db, sentencia, -1, &stmt, NULL) ;
+		if (result != SQLITE_OK) {
+			printf("Error preparing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("SQL query prepared (SELECT)\n");
+
+		 result = sqlite3_bind_text(stmt, 1, titulo.c_str(), titulo.length(), SQLITE_STATIC);
+		if (result != SQLITE_OK) {
+			printf("Error binding parameters\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		
+		do {
+			result = sqlite3_step(stmt) ;
+			if (result == SQLITE_ROW) {
+				actualizar = sqlite3_column_int(stmt, 8);
+				
+			}
+		} while (result == SQLITE_ROW);
+		result = sqlite3_finalize(stmt);
+		if (result != SQLITE_OK) {
+			printf("Error finalizing statement (SELECT)\n");
+			printf("%s\n", sqlite3_errmsg(db));
+			return result;
+		}
+
+		printf("Prepared statement finalized (SELECT)\n");
+		//cout<<actualizar;
+		return actualizar;
+}
+
+void Gestor::guardarRecaudacion(string titulo){
+
+	int recaudacion;
+	int recaudacionf;
+
+	FILE* file;
+		
+	file=fopen("Recaudacion.txt","r");
+	if(file==NULL)
+		{
+			file=fopen("Recaudacion.txt","w");
+			recaudacion=sacarPrecio(titulo);
+			fprintf(file,"%i",recaudacion);
+		}
+	else
+		{
+
+			cout << "Pulse intro"<<endl;
+			char str[10];
+			file=fopen("Recaudacion.txt","r");
+
+			while(fgets(str,10,file)!=NULL)
+			{
+				clear_if_neededotro(str);
+
+				sscanf(str,"%i",&recaudacionf);
+			}
+			fclose(file);
+			
+			file=fopen("Recaudacion.txt","w");
+			recaudacionf += sacarPrecio(titulo);	
+			fprintf(file,"%i",recaudacionf);
+		}
+		fclose(file);
+		//cout<<recaudacionf;
+}
+int Gestor::consultarRecaudacion(){
+
+
+	int recaudacion;
+	char str[10];
+
+	FILE* file;
+		
+	file=fopen("Recaudacion.txt","r");
+	if(file==NULL)
+		{
+			cout << "Todavia no hay tesoreria" <<endl;
+		}
+	else
+		{
+
+			cout << "Pulse intro"<<endl;
+			char str[10];
+			file=fopen("Recaudacion.txt","r");
+
+			while(fgets(str,10,file)!=NULL)
+			{
+				clear_if_neededotro(str);
+
+				sscanf(str,"%i",&recaudacion);
+				
+			}
+			
+			
+			
+		}
+		fclose(file);
+
+		return recaudacion;
+
+	}

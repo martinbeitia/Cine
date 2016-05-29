@@ -118,6 +118,10 @@ void accederUsuario(void)
 					cout<<"Elija que pelicula quiere ver: ";
 					cin>>eleccion;
 					gestor->aumentarAsistencia(eleccion);
+					gestor->actualizarAsistencia(eleccion);
+					gestor->guardarAsistencia();
+					gestor->guardarRecaudacion(eleccion);
+					
 					break;}
 			case 2:	{gestor->puntuar();
 					break;}
@@ -189,9 +193,9 @@ int menuAdminDentro()
 	char num[MAX];
 	int optionAdminMetido;
 
-	printf("1.Añadir/quitar pelicula.\n\n");
+	printf("1.Añadir/Quitar pelicula.\n\n");
 	printf("2.Busqueda.\n\n");
-	printf("3.Records.\n\n");
+	printf("3.Consultar asistencias.\n\n");
 	printf("4.Recaudacion.\n\n");
 	printf("5.Salir.\n\n");
 	printf( "\n\n   Introduzca opcion (1-5): ", 162 );
@@ -234,6 +238,8 @@ void accederAdmin()
 	string director;
 	string genero;
 	int opcionBuscar;
+	int asistencia;
+	int recaudacion;
 	
 	printf("Escriba el nombre del administrador. \n");
 	fgets(str,MAX_LENGHT,stdin);
@@ -294,9 +300,12 @@ void accederAdmin()
 							default: cout << "Esa opcion no es valida"; break;
 						}
 				break;
-				case 3: cout<<"Hola";break;
-				case 4: cout<<"Hola";break;
-				case 5: cout<<"Hola";break;
+				case 3: asistencia = gestor->consultarAsistencia();
+						cout<<"El cine ha recibido un total de "<<asistencia<<" visitas"<<endl;
+						break;
+				case 4: recaudacion = gestor->consultarRecaudacion();
+						cout<<"El cine ha recaudado un total de "<<recaudacion<<" euros"<<endl;break;
+				case 5: break;
 				default: printf("Introduzca una opcion valida. \n\n"); break;
 			}
 	}
