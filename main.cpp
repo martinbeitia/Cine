@@ -197,8 +197,9 @@ int menuAdminDentro()
 	printf("2.Busqueda.\n\n");
 	printf("3.Consultar asistencias.\n\n");
 	printf("4.Recaudacion.\n\n");
-	printf("5.Salir.\n\n");
-	printf( "\n\n   Introduzca opcion (1-5): ", 162 );
+	printf("5.Puntuacion de cine.\n\n");
+	printf("6.Salir.\n\n");
+	printf( "\n\n   Introduzca opcion (1-6): ", 162 );
 
 	fgets(num,MAX,stdin);
 	clear_if_needed(num);
@@ -213,7 +214,7 @@ int menuBuscar()
 	char num[MAX];
 	int optionAdminBusqueda;
 
-	printf("1.Buscar por anyo.\n");
+	printf("1.Buscar por anyo.\n\n");
 	printf("2.Buscar por director.\n\n");
 	printf("3.Buscar por genero.\n\n");
 	printf("4.Atras\n\n");
@@ -240,6 +241,10 @@ void accederAdmin()
 	int opcionBuscar;
 	int asistencia;
 	int recaudacion;
+	int asistenciados;
+	int puntuaciondos;
+	int mediapuntuacion;
+
 	
 	printf("Escriba el nombre del administrador. \n");
 	fgets(str,MAX_LENGHT,stdin);
@@ -305,7 +310,13 @@ void accederAdmin()
 						break;
 				case 4: recaudacion = gestor->consultarRecaudacion();
 						cout<<"El cine ha recaudado un total de "<<recaudacion<<" euros"<<endl;break;
-				case 5: break;
+				case 5: asistenciados = gestor->consultarAsistencia();
+						puntuaciondos = gestor->consultarPuntuacion();
+						mediapuntuacion = puntuaciondos/asistenciados;
+						cout << "El cine tiene una nota media de " << mediapuntuacion << endl;
+
+						break;
+				case 6: break;
 				default: printf("Introduzca una opcion valida. \n\n"); break;
 			}
 	}

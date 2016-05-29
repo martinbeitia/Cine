@@ -40,6 +40,7 @@ class Gestor{
 		int sacarPrecio(string titulotres);
 		void guardarRecaudacion(string titulocuatro);
 		int consultarRecaudacion();
+		int consultarPuntuacion();
 
 
 

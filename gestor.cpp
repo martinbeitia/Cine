@@ -560,8 +560,8 @@ int Gestor::mostrarPelis() {
 void Gestor::puntuar()
 {
 
-	float puntuacion;
-	float puntuacionf;
+	int puntuacion;
+	int puntuacionf;
 
 	FILE* file;
 		
@@ -569,9 +569,16 @@ void Gestor::puntuar()
 	if(file==NULL)
 		{
 			file=fopen("Puntuaciones.txt","w");
+			do{
 			cout<<"Como valorarias A team studios: ";
 			cin>>puntuacion;
-			fprintf(file,"%f",puntuacion);
+			
+			if(puntuacion >=0 && puntuacion <=10){
+			fprintf(file,"%i",puntuacion);
+			}else{
+				cout << "La puntuacion ha de ser mayor que 0 y menor que 10" << endl;
+			}
+			}while(puntuacion <0 || puntuacion >10);
 		}
 	else
 		{
@@ -584,17 +591,59 @@ void Gestor::puntuar()
 			{
 				clear_if_neededotro(str);
 
-				sscanf(str,"%f",&puntuacionf);
+				sscanf(str,"%i",&puntuacionf);
 			}
 			fclose(file);
 			
 			file=fopen("Puntuaciones.txt","w");
+			do{
 			cout<<"Como valorarias A team studios: ";
 			cin>>puntuacion;
+			if(puntuacion >=0 && puntuacion <=10){
 			puntuacionf += puntuacion;	
-			fprintf(file,"%f",puntuacionf);
+			fprintf(file,"%i",puntuacionf);
+			}else{
+				cout << "La puntuacion ha de ser mayor que 0 y menor que 10" << endl;
+			}
+			}while(puntuacion <0 || puntuacion >10);
 		}
 		fclose(file);
+}
+int Gestor::consultarPuntuacion(){
+
+
+	int puntuacion;
+	char str[10];
+
+	FILE* file;
+		
+	file=fopen("Puntuaciones.txt","r");
+	if(file==NULL)
+		{
+			cout << "Todavia no ha habido puntuaciones" <<endl;
+		}
+	else
+		{
+
+			cout << "Pulse intro"<<endl;
+			char str[10];
+			file=fopen("Puntuaciones.txt","r");
+
+			while(fgets(str,10,file)!=NULL)
+			{
+				clear_if_neededotro(str);
+
+				sscanf(str,"%i",&puntuacion);
+				
+			}
+			
+			
+			
+		}
+		fclose(file);
+
+
+	return puntuacion;
 }
 
 int Gestor::aumentarAsistencia(string titulo){
