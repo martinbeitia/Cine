@@ -118,7 +118,8 @@ void accederUsuario(Gestor *gestor)
 					string eleccion;
 					cout<<"Elija que pelicula quiere ver: ";
 					getline(cin,eleccion);
-					//gestor->aumentarAsistencia(eleccion);
+					cout << "Pulse intro" << endl;
+					gestor->aumentarAsistencia(eleccion);
 					gestor->actualizarAsistencia(eleccion);
 					gestor->guardarAsistencia();
 					gestor->guardarRecaudacion(eleccion);
