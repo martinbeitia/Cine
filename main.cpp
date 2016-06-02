@@ -90,16 +90,16 @@ void accederUsuario(Gestor *gestor)
 	int probar;
 
 	
-	printf("Escriba el nombre de usuario. \n");
+	printf("Username \n");
 	fgets(str,MAX_LENGHT,stdin);
 	clear_if_needed(str);
-	nombre = (char*)malloc ( strlen((str) +1) * sizeof(char) );
+	nombre = (char*)malloc ( (strlen(str) +1) * sizeof(char) );
 	sscanf(str, "%s",nombre); 
 
-	printf("Contrasena\n");
+	printf("Password\n");
 	fgets(str,MAX_LENGHT,stdin);
 	clear_if_needed(str);
-	contra = (char*)malloc ( strlen((str) +1) * sizeof(char) );
+	contra = (char*)malloc ( (strlen(str) +1) * sizeof(char) );
 	sscanf(str, "%s",contra);
 
 	Usuario u={nombre,contra};
@@ -158,13 +158,13 @@ int crearCuenta()
 	printf("Username: \n");
 	fgets(str,MAX_LENGHT,stdin);
 	clear_if_needed(str);
-	nombre = (char*)malloc ( strlen((str) +1) * sizeof(char) );
+	nombre = (char*)malloc ( (strlen(str) +1) * sizeof(char) );
 	sscanf(str, "%s", nombre); 
 
 	printf("Password: \n");
 	fgets(str,MAX_LENGHT,stdin);
 	clear_if_needed(str);
-	contra = (char*)malloc ( strlen((str) +1) * sizeof(char) );
+	contra = (char*)malloc ( (strlen(str) +1) * sizeof(char) );
 	sscanf(str, "%s",contra);
 
 	Usuario u={nombre,contra};
@@ -259,12 +259,12 @@ void accederAdmin(Gestor *gestor)
 	printf("Administrador username: \n");
 	fgets(str,MAX_LENGHT,stdin);
 	clear_if_needed(str);
-	nombre = (char*)malloc ( strlen((str) +1) * sizeof(char) );
+	nombre = (char*)malloc ( (strlen(str) +1) * sizeof(char) );
 	sscanf(str, "%s", nombre); 
 
 	printf("Administrador password:\n");
 	fgets(str,MAX_LENGHT,stdin);
-	contra = (char*)malloc ( strlen((str) +1) * sizeof(char) );
+	contra = (char*)malloc ( (strlen(str) +1) * sizeof(char) );
 	clear_if_needed(str);
 	sscanf(str, "%s",contra);
 		
