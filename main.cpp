@@ -116,13 +116,14 @@ void accederUsuario(void)
 			case 1: {gestor->mostrarPelis();
 					string eleccion;
 					cout<<"Elija que pelicula quiere ver: ";
-					cin>>eleccion;
+					getline(cin,eleccion);
 					gestor->aumentarAsistencia(eleccion);
 					gestor->actualizarAsistencia(eleccion);
 					gestor->guardarAsistencia();
 					gestor->guardarRecaudacion(eleccion);
 					
-					break;}
+					break;
+					}
 			case 2:	{gestor->puntuar();
 					break;}
 			case 3: {menuUsuario();break;}
@@ -278,7 +279,7 @@ void accederAdmin()
 						string titulo;
 						gestor->mostrarPelis();
 						cout<<"Inserta el nombre de la pelicula a borrar: ";
-						cin>>titulo;
+						getline(cin,titulo);
 						gestor->borrarPeli(titulo);
 					}	
 					if(otraOpcion!=1 && otraOpcion!=2) cout<<"Opcion no valida"<<endl;
@@ -293,12 +294,12 @@ void accederAdmin()
 									break;
 							case 2: 
 									cout<<"Introduce un director: "<<endl;
-									cin>>director;					
+									getline(cin,director);					
 									gestor->buscarpordirector(director);
 									break;
 							case 3: 
 									cout<<"Introduce un genero: "<<endl;
-									cin>>genero;					
+									getline(cin,genero);					
 									gestor->buscarporgenero(genero);
 									break;
 							
