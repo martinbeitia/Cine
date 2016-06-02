@@ -79,7 +79,7 @@ int menuUsuarioDentro()
 	return optionUsuarioMetido;
 }
 
-void accederUsuario(void)
+void accederUsuario(Gestor *gestor)
 {
 	char *nombre;
 	char *contra;
@@ -109,6 +109,7 @@ void accederUsuario(void)
 	free(contra);
 	if(exist==1)
 	{
+		do{
 		opcionUsuarioMetido = menuUsuarioDentro();
 
     	switch(opcionUsuarioMetido)
@@ -117,7 +118,7 @@ void accederUsuario(void)
 					string eleccion;
 					cout<<"Elija que pelicula quiere ver: ";
 					getline(cin,eleccion);
-					gestor->aumentarAsistencia(eleccion);
+					//gestor->aumentarAsistencia(eleccion);
 					gestor->actualizarAsistencia(eleccion);
 					gestor->guardarAsistencia();
 					gestor->guardarRecaudacion(eleccion);
@@ -130,10 +131,11 @@ void accederUsuario(void)
 					
 			default: {printf("Introduzca una opcion valida. \n\n"); break;}
     	}
+    	}while(opcionUsuarioMetido !=3);
 	}
 	 else 
 	{
-		printf("El nombre o contrasena del usuario no es correcto. \n");
+		printf("El nombre o contrasenya del usuario no es correcto. \n");
 	}
     	
 }
@@ -147,13 +149,13 @@ int crearCuenta()
 	char str[MAX_LENGHT];
 	int add;
 
-	printf("Escriba el nombre de usuario. \n");
+	printf("Username: \n");
 	fgets(str,MAX_LENGHT,stdin);
 	clear_if_needed(str);
 	nombre = (char*)malloc ( strlen((str) +1) * sizeof(char) );
 	sscanf(str, "%s", nombre); 
 
-	printf("Contrasena\n");
+	printf("Password: \n");
 	fgets(str,MAX_LENGHT,stdin);
 	clear_if_needed(str);
 	contra = (char*)malloc ( strlen((str) +1) * sizeof(char) );
@@ -228,7 +230,7 @@ int menuBuscar()
 
 }
 
-void accederAdmin()
+void accederAdmin(Gestor *gestor)
 {
 	char *nombre;
 	char *contra;
@@ -262,9 +264,10 @@ void accederAdmin()
 
 	if((strcmp(nombre, "ateamstudios") ==0)&&(strcmp(contra, "ateamcines") ==0))
 	{
+		
 
-
-		int opcionAdminMetido = menuAdminDentro();
+		do{
+		 opcionAdminMetido = menuAdminDentro();
 
 			switch(opcionAdminMetido){
 				case 1:
@@ -319,7 +322,10 @@ void accederAdmin()
 						break;
 				case 6: break;
 				default: printf("Introduzca una opcion valida. \n\n"); break;
+
 			}
+			
+		}while(opcionAdminMetido !=6);
 	}
 	else 
 	{
@@ -328,10 +334,13 @@ void accederAdmin()
     
 	free(nombre);
 	free(contra);
+
 }
 
 int main(void)
 {
+
+
 	int opcion;
 	int opcionUsuario;
 	int opcionAdmin;
@@ -354,7 +363,7 @@ int main(void)
 		        switch(opcionUsuario)
 		        {
 		        	case 1:
-		        	accederUsuario();
+		        	accederUsuario(gestor);
 		        	break;
 
 		        	case 2:
@@ -376,7 +385,7 @@ int main(void)
 		        switch(opcionAdmin)
 		        {
 		        	case 1:
-		        	accederAdmin();
+		        	accederAdmin(gestor);
 		        	break;
 		        		
 			        case 2:break;

@@ -504,17 +504,17 @@ int Gestor::mostrarPelis() {
 
 	int Gestor::crearTabla(){
 
-		Gestor *gestor= new Gestor("basededatos.sqlite");
+		//Gestor *gestor= new Gestor("basededatos.sqlite");
 
 		char commandline[]  = "CREATE TABLE IF NOT EXISTS basededatos(titulo VARCHAR(30), director VARCHAR(30), actor VARCHAR(30), duracion INT, genero VARCHAR(15), anyo INT, fecha VARCHAR(10), hora VARCHAR(10), precio INT, asistencia INT)";
 		sqlite3_stmt *stmt;
 
 		
 
-		int result = sqlite3_prepare_v2(gestor->db, commandline, -1, &stmt, NULL) ;
+		int result = sqlite3_prepare_v2(db, commandline, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (CREATE)\n");
-			printf("%s\n", sqlite3_errmsg(gestor->db));
+			printf("%s\n", sqlite3_errmsg(db));
 			return result;
 		}
 
@@ -523,14 +523,14 @@ int Gestor::mostrarPelis() {
 		result = sqlite3_step(stmt);
 		if (result != SQLITE_DONE) {
 			printf("Error deleting data\n");
-			printf("%s\n", sqlite3_errmsg(gestor->db));
+			printf("%s\n", sqlite3_errmsg(db));
 			return result;
 		}
 
 		result = sqlite3_finalize(stmt);
 		if (result != SQLITE_OK) {
 			printf("Error finalizing statement (CREATE)\n");
-			printf("%s\n", sqlite3_errmsg(gestor->db));
+			printf("%s\n", sqlite3_errmsg(db));
 			return result;
 		}
 
@@ -540,7 +540,7 @@ int Gestor::mostrarPelis() {
 	}
 
 	Gestor::Gestor(string dbFile) {
-		int result = sqlite3_open("basededatos.sqlite", &db);
+		int result = sqlite3_open(dbFile.c_str(), &db);
 		if (result != SQLITE_OK) {
 			printf("Error opening database\n");
 
@@ -570,7 +570,7 @@ void Gestor::puntuar()
 		{
 			file=fopen("Puntuaciones.txt","w");
 			do{
-			cout<<"Como valorarias A team studios: ";
+			cout<<"Como valorarias A team studios? Dejanos tu valoracion global de la aplicacion: ";
 			cin>>puntuacion;
 			
 			if(puntuacion >=0 && puntuacion <=10){
@@ -653,33 +653,28 @@ int Gestor::aumentarAsistencia(string titulo){
 	char sentencia[] = "select asistencia from basededatos where titulo=?";
 	int result = sqlite3_prepare_v2(db, sentencia, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
-			printf("Error preparing statement (SELECT)\n");
-			printf("%s\n", sqlite3_errmsg(db));
-			return result;
+			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
 		printf("SQL query prepared (SELECT)\n");
 
 		 result = sqlite3_bind_text(stmt, 1, titulo.c_str(), titulo.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
-			printf("Error binding parameters\n");
-			printf("%s\n", sqlite3_errmsg(db));
-			return result;
+			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
 		
 		do {
 			result = sqlite3_step(stmt) ;
 			if (result == SQLITE_ROW) {
-				actualizar = sqlite3_column_int(stmt, 9);
-				actualizar++;
+				actualizar = sqlite3_column_int(stmt, 0) + 1;
+				
 			}
 		} while (result == SQLITE_ROW);
+		
 		result = sqlite3_finalize(stmt);
 		if (result != SQLITE_OK) {
-			printf("Error finalizing statement (SELECT)\n");
-			printf("%s\n", sqlite3_errmsg(db));
-			return result;
+			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
 		printf("Prepared statement finalized (SELECT)\n");
@@ -691,7 +686,7 @@ int Gestor::actualizarAsistencia(string titulo){
 
 		sqlite3_stmt *stmt;
 		int meter = aumentarAsistencia(titulo);
-		char sql[] = "update basededatos  set asistencia=? where titulo=?";
+		char sql[] = "update basededatos set asistencia=? where titulo=?";
 		int result = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (UPDATE)\n");
@@ -812,37 +807,31 @@ int Gestor::consultarAsistencia(){
 int Gestor::sacarPrecio(string titulo){
 
 	sqlite3_stmt *stmt;
-	int actualizar;
+	int actualizar=-1;
 	char sentencia[] = "select precio from basededatos where titulo=?";
 	int result = sqlite3_prepare_v2(db, sentencia, -1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
-			printf("Error preparing statement (SELECT)\n");
-			printf("%s\n", sqlite3_errmsg(db));
-			return result;
+			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
 		printf("SQL query prepared (SELECT)\n");
 
 		 result = sqlite3_bind_text(stmt, 1, titulo.c_str(), titulo.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
-			printf("Error binding parameters\n");
-			printf("%s\n", sqlite3_errmsg(db));
-			return result;
+			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
 		
 		do {
 			result = sqlite3_step(stmt) ;
 			if (result == SQLITE_ROW) {
-				actualizar = sqlite3_column_int(stmt, 8);
+				actualizar = sqlite3_column_int(stmt, 0);
 				
 			}
 		} while (result == SQLITE_ROW);
 		result = sqlite3_finalize(stmt);
 		if (result != SQLITE_OK) {
-			printf("Error finalizing statement (SELECT)\n");
-			printf("%s\n", sqlite3_errmsg(db));
-			return result;
+			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
 		printf("Prepared statement finalized (SELECT)\n");
