@@ -121,8 +121,8 @@ void accederUsuario(Gestor *gestor)
 					cout<<"Elija que pelicula quiere ver: ";
 					getline(cin,eleccion);
 					cout << "Pulse intro" << endl;
-					gestor->aumentarAsistencia(eleccion);
 					gestor->actualizarAsistencia(eleccion);
+					gestor->aumentarAsistencia(eleccion);
 					gestor->guardarAsistencia();
 					gestor->guardarRecaudacion(eleccion);
 					}else{
@@ -253,6 +253,7 @@ void accederAdmin(Gestor *gestor)
 	int asistenciados;
 	int puntuaciondos;
 	int mediapuntuacion;
+	int probar;
 
 	
 	printf("Administrador username: \n");
@@ -285,12 +286,16 @@ void accederAdmin(Gestor *gestor)
 					gestor->insertPeli();
 					}
 					if(otraOpcion==2){
-						string titulo;
-						gestor->mostrarPelis();
+						probar = gestor->mostrarPelis();
+						if(probar==1){
+						string titulo;						
 						cout<<"Inserta el nombre de la pelicula a borrar: ";
 						getline(cin,titulo);
 						gestor->borrarPeli(titulo);
-					}	
+						}else{
+						cout << "No hay peliculas registradas" << endl;
+						}	
+					}
 					if(otraOpcion!=1 && otraOpcion!=2) cout<<"Opcion no valida"<<endl;
 					break;
 				case 2: opcionBuscar = menuBuscar();
