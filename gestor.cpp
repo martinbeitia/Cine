@@ -205,7 +205,7 @@ int Gestor::mostrarPelis() {
 		if (result != SQLITE_OK) {
 			printf("Error preparing statement (SELECT)\n");
 			printf("%s\n", sqlite3_errmsg(db));
-			return result;
+			//return result;
 		}
 
 		//printf("SQL query prepared (SELECT)\n");
@@ -249,8 +249,11 @@ int Gestor::mostrarPelis() {
 				cout << "Precio (euros): " << precio << endl;
 				cout << "Asistencia: " << asistencia << endl;
 				cout << "----------------------------" << endl;
+				probar =1;
 				
 				
+			}else{
+				probar =0;
 			}
 		} while (result == SQLITE_ROW);
 
@@ -261,12 +264,12 @@ int Gestor::mostrarPelis() {
 		if (result != SQLITE_OK) {
 			printf("Error finalizing statement (SELECT)\n");
 			printf("%s\n", sqlite3_errmsg(db));
-			return result;
+			//return result;
 		}
 
 		//printf("Prepared statement finalized (SELECT)\n");
 
-		return SQLITE_OK;
+		return probar;
 	}
 
 	int Gestor::buscarpordirector(string buscar){

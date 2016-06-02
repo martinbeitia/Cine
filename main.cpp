@@ -87,6 +87,7 @@ void accederUsuario(Gestor *gestor)
 	int exist;
 	int opcionUsuarioMetido;
 	float num;
+	int probar;
 
 	
 	printf("Escriba el nombre de usuario. \n");
@@ -114,7 +115,8 @@ void accederUsuario(Gestor *gestor)
 
     	switch(opcionUsuarioMetido)
     	{
-			case 1: {gestor->mostrarPelis();
+			case 1: {probar=gestor->mostrarPelis();
+					if(probar=1){
 					string eleccion;
 					cout<<"Elija que pelicula quiere ver: ";
 					getline(cin,eleccion);
@@ -123,6 +125,9 @@ void accederUsuario(Gestor *gestor)
 					gestor->actualizarAsistencia(eleccion);
 					gestor->guardarAsistencia();
 					gestor->guardarRecaudacion(eleccion);
+					}else{
+						cout << "Vacia" <<endl;
+					}
 					
 					break;
 					}
