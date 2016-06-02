@@ -342,7 +342,7 @@ void accederAdmin(Gestor *gestor)
 	}
 	else 
 	{
-    	printf("El nombre o contrasena del administrador no es correcto. \n");
+    	printf("El nombre o contrasenya del administrador no es correcto. \n");
     }
     
 	free(nombre);
