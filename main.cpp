@@ -255,13 +255,13 @@ void accederAdmin(Gestor *gestor)
 	int mediapuntuacion;
 
 	
-	printf("Escriba el nombre del administrador. \n");
+	printf("Administrador username: \n");
 	fgets(str,MAX_LENGHT,stdin);
 	clear_if_needed(str);
 	nombre = (char*)malloc ( strlen((str) +1) * sizeof(char) );
 	sscanf(str, "%s", nombre); 
 
-	printf("Contrasena\n");
+	printf("Administrador password:\n");
 	fgets(str,MAX_LENGHT,stdin);
 	contra = (char*)malloc ( strlen((str) +1) * sizeof(char) );
 	clear_if_needed(str);
@@ -277,7 +277,7 @@ void accederAdmin(Gestor *gestor)
 
 			switch(opcionAdminMetido){
 				case 1:
-					cout<<"1-Añadir / 2-Quitar"<<endl;
+					cout<<"1-Anyadir / 2-Quitar"<<endl;
 			        fgets(num,MAX,stdin);
 					clear_if_needed(num);
 					sscanf(num, "%d", &otraOpcion);
@@ -326,7 +326,7 @@ void accederAdmin(Gestor *gestor)
 						puntuaciondos = gestor->consultarPuntuacion();
 						mediapuntuacion = puntuaciondos/asistenciados;
 						cout << "El cine tiene una nota media de " << mediapuntuacion << endl;
-
+						cout << endl;
 						break;
 				case 6: break;
 				default: printf("Introduzca una opcion valida. \n\n"); break;
