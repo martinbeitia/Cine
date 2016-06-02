@@ -567,7 +567,7 @@ void Gestor::puntuar()
 
 	FILE* file;
 		
-	//file=fopen("Puntuaciones.txt","r");
+	file=fopen("Puntuaciones.txt","r");
 	if(file==NULL)
 		{
 			file=fopen("Puntuaciones.txt","w");
@@ -719,16 +719,8 @@ int Gestor::actualizarAsistencia(string titulo){
 
 		//printf("Prepared statement finalized (UPDATE)\n");
 
-return SQLITE_OK;
+		return SQLITE_OK;
 	}
-
-/*int Gestor::devolverAsistencia(){
-
-	sqlite3_stmt *stmt;
-
-	char sql[] = "select sum(asistencia) from basededatos";
-
-}*/
 
 void Gestor::guardarAsistencia(){
 
