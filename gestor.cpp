@@ -673,6 +673,8 @@ int Gestor::aumentarAsistencia(string titulo){
 				
 			}
 		} while (result == SQLITE_ROW);
+
+
 		
 		result = sqlite3_finalize(stmt);
 		if (result != SQLITE_OK) {
@@ -710,6 +712,13 @@ int Gestor::actualizarAsistencia(string titulo){
 			printf("%s\n", sqlite3_errmsg(db));
 			return result;
 		}
+		result = sqlite3_step(stmt);
+			if (result != SQLITE_DONE) {
+				
+	      		cout << sqlite3_errmsg(db) << endl;
+				
+				return result;
+			}
 		result = sqlite3_finalize(stmt);
 		if (result != SQLITE_OK) {
 			printf("Error finalizing statement (UPDATE)\n");
