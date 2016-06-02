@@ -53,9 +53,9 @@ int Gestor::insertPeli(){
 	cin>>anyo;
 	cout<<"Escribe el precio de la pelicula:"<<endl;
 	cin>>precio;
-	cout<<"Escribe la asistencia esperada de la pelicula:"<<endl;
-	cin>>asistencia;
-	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio, asistencia) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	//cout<<"Escribe la asistencia esperada de la pelicula:"<<endl;
+	//cin>>asistencia;
+	char sentencia[]  = "insert into basededatos (titulo, director, actor, duracion, genero, anyo, fecha, hora, precio, asistencia) values (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
 
 	int result = sqlite3_prepare_v2(db, sentencia, strlen(sentencia)+1, &stmt, NULL) ;
 		if (result != SQLITE_OK) {
@@ -64,7 +64,7 @@ int Gestor::insertPeli(){
 			return result;
 		}
 
-		printf("SQL query prepared (INSERT)\n");
+		//printf("SQL query prepared (INSERT)\n");
 
 		result = sqlite3_bind_text(stmt, 1, titulo.c_str(), titulo.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
@@ -128,12 +128,12 @@ int Gestor::insertPeli(){
 			printf("%s\n", sqlite3_errmsg(db));
 			return result;
 		}
-		result = sqlite3_bind_int(stmt, 10, asistencia);
-		if (result != SQLITE_OK) {
-			printf("Error binding parameters\n");
-			printf("%s\n", sqlite3_errmsg(db));
-			return result;
-		}
+		//result = sqlite3_bind_int(stmt, 10, asistencia);
+		//if (result != SQLITE_OK) {
+			//printf("Error binding parameters\n");
+			//printf("%s\n", sqlite3_errmsg(db));
+			//return result;
+		//}
 
 		result = sqlite3_step(stmt);
 		if (result != SQLITE_DONE) {
@@ -148,7 +148,7 @@ int Gestor::insertPeli(){
 			return result;
 		}
 
-		printf("Prepared statement finalized (INSERT)\n");
+		//printf("Prepared statement finalized (INSERT)\n");
 
 		return SQLITE_OK;
 
@@ -168,7 +168,7 @@ int Gestor::borrarPeli(string borrar){
 			return result;
 		}
 
-		printf("SQL query prepared (DELETE)\n");
+		//printf("SQL query prepared (DELETE)\n");
 
 		 result = sqlite3_bind_text(stmt, 1, borrar.c_str(), borrar.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
@@ -191,7 +191,7 @@ int Gestor::borrarPeli(string borrar){
 			return result;
 		}
 
-		printf("Prepared statement finalized (DELETE)\n");
+		//printf("Prepared statement finalized (DELETE)\n");
 
 		return SQLITE_OK;
 }
@@ -208,7 +208,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("SQL query prepared (SELECT)\n");
+		//printf("SQL query prepared (SELECT)\n");
 
 		char titulo[100] ;
 		char director[100] ;   
@@ -264,7 +264,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("Prepared statement finalized (SELECT)\n");
+		//printf("Prepared statement finalized (SELECT)\n");
 
 		return SQLITE_OK;
 	}
@@ -281,7 +281,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("SQL query prepared (SELECT)\n");
+		//printf("SQL query prepared (SELECT)\n");
 
 		 result = sqlite3_bind_text(stmt, 1, buscar.c_str(), buscar.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
@@ -343,7 +343,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("Prepared statement finalized (SELECT)\n");
+		//printf("Prepared statement finalized (SELECT)\n");
 		return SQLITE_OK;
 	}
 
@@ -359,7 +359,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("SQL query prepared (SELECT)\n");
+		//printf("SQL query prepared (SELECT)\n");
 
 		 result = sqlite3_bind_text(stmt, 1, buscardos.c_str(), buscardos.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
@@ -381,7 +381,7 @@ int Gestor::mostrarPelis() {
 
 		printf("\n");
 		printf("\n");
-		cout << "Peliculas del director/a: " << buscardos << endl;
+		cout << "Peliculas del genero: " << buscardos << endl;
 		printf("\n");
 		do {
 			result = sqlite3_step(stmt) ;
@@ -421,7 +421,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("Prepared statement finalized (SELECT)\n");
+		//printf("Prepared statement finalized (SELECT)\n");
 		return SQLITE_OK;
 	}
 
@@ -437,7 +437,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("SQL query prepared (SELECT)\n");
+		//printf("SQL query prepared (SELECT)\n");
 
 		 result = sqlite3_bind_text(stmt, 1, buscartres.c_str(), buscartres.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
@@ -459,7 +459,7 @@ int Gestor::mostrarPelis() {
 
 		printf("\n");
 		printf("\n");
-		cout << "Peliculas del director/a: " << buscartres << endl;
+		cout << "Peliculas del anyo: " << buscartres << endl;
 		printf("\n");
 		do {
 			result = sqlite3_step(stmt) ;
@@ -498,7 +498,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("Prepared statement finalized (SELECT)\n");
+		//printf("Prepared statement finalized (SELECT)\n");
 		return SQLITE_OK;
 	}
 
@@ -518,7 +518,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("SQL query prepared (CREATE)\n");
+		//printf("SQL query prepared (CREATE)\n");
 
 		result = sqlite3_step(stmt);
 		if (result != SQLITE_DONE) {
@@ -534,7 +534,7 @@ int Gestor::mostrarPelis() {
 			return result;
 		}
 
-		printf("Prepared statement finalized (CREATE)\n");
+		//printf("Prepared statement finalized (CREATE)\n");
 		return SQLITE_OK;
 
 	}
@@ -565,12 +565,12 @@ void Gestor::puntuar()
 
 	FILE* file;
 		
-	file=fopen("Puntuaciones.txt","r");
+	//file=fopen("Puntuaciones.txt","r");
 	if(file==NULL)
 		{
 			file=fopen("Puntuaciones.txt","w");
 			do{
-			cout<<"Como valorarias A team studios? Dejanos tu valoracion global de la aplicacion: ";
+			cout<<"Como valoraria A team studios? Dejenos su valoracion global de la aplicacion: ";
 			cin>>puntuacion;
 			
 			if(puntuacion >=0 && puntuacion <=10){
@@ -597,7 +597,7 @@ void Gestor::puntuar()
 			
 			file=fopen("Puntuaciones.txt","w");
 			do{
-			cout<<"Como valorarias A team studios: ";
+			cout<<"Como valoraria A team studios? Dejenos su valoracion global de la aplicacion: ";
 			cin>>puntuacion;
 			if(puntuacion >=0 && puntuacion <=10){
 			puntuacionf += puntuacion;	
@@ -656,7 +656,7 @@ int Gestor::aumentarAsistencia(string titulo){
 			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
-		printf("SQL query prepared (SELECT)\n");
+		//printf("SQL query prepared (SELECT)\n");
 
 		 result = sqlite3_bind_text(stmt, 1, titulo.c_str(), titulo.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
@@ -677,7 +677,7 @@ int Gestor::aumentarAsistencia(string titulo){
 			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
-		printf("Prepared statement finalized (SELECT)\n");
+		//printf("Prepared statement finalized (SELECT)\n");
 		
 		return actualizar;
 }
@@ -694,7 +694,7 @@ int Gestor::actualizarAsistencia(string titulo){
 			return result;
 		}
 
-		printf("SQL query prepared (UPDATE)\n");
+		//printf("SQL query prepared (UPDATE)\n");
 		result = sqlite3_bind_int(stmt, 1, meter);
 		if (result != SQLITE_OK) {
 			printf("Error binding parameters\n");
@@ -715,7 +715,7 @@ int Gestor::actualizarAsistencia(string titulo){
 			return result;
 		}
 
-		printf("Prepared statement finalized (UPDATE)\n");
+		//printf("Prepared statement finalized (UPDATE)\n");
 
 return SQLITE_OK;
 	}
@@ -814,7 +814,7 @@ int Gestor::sacarPrecio(string titulo){
 			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
-		printf("SQL query prepared (SELECT)\n");
+		//printf("SQL query prepared (SELECT)\n");
 
 		 result = sqlite3_bind_text(stmt, 1, titulo.c_str(), titulo.length(), SQLITE_STATIC);
 		if (result != SQLITE_OK) {
@@ -834,7 +834,7 @@ int Gestor::sacarPrecio(string titulo){
 			cout <<  sqlite3_errmsg(db) << endl;
 		}
 
-		printf("Prepared statement finalized (SELECT)\n");
+		//printf("Prepared statement finalized (SELECT)\n");
 		//cout<<actualizar;
 		return actualizar;
 }

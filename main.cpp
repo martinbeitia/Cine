@@ -196,7 +196,7 @@ int menuAdminDentro()
 	char num[MAX];
 	int optionAdminMetido;
 
-	printf("1.Añadir/Quitar pelicula.\n\n");
+	printf("1.Anyadir/Quitar pelicula.\n\n");
 	printf("2.Busqueda.\n\n");
 	printf("3.Consultar asistencias.\n\n");
 	printf("4.Recaudacion.\n\n");
@@ -311,9 +311,11 @@ void accederAdmin(Gestor *gestor)
 				break;
 				case 3: asistencia = gestor->consultarAsistencia();
 						cout<<"El cine ha recibido un total de "<<asistencia<<" visitas"<<endl;
+						cout << endl;
 						break;
 				case 4: recaudacion = gestor->consultarRecaudacion();
-						cout<<"El cine ha recaudado un total de "<<recaudacion<<" euros"<<endl;break;
+						cout<<"El cine ha recaudado un total de "<<recaudacion<<" euros"<<endl;
+						cout << endl;break;
 				case 5: asistenciados = gestor->consultarAsistencia();
 						puntuaciondos = gestor->consultarPuntuacion();
 						mediapuntuacion = puntuaciondos/asistenciados;
