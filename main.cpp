@@ -116,7 +116,7 @@ void accederUsuario(Gestor *gestor)
     	switch(opcionUsuarioMetido)
     	{
 			case 1: {probar=gestor->mostrarPelis();
-					if(probar=1){
+					if(probar==1){
 					string eleccion;
 					cout<<"Elija que pelicula quiere ver: ";
 					getline(cin,eleccion);

@@ -220,6 +220,7 @@ int Gestor::mostrarPelis() {
 		char hora[100] ;
 		int precio;
 		int asistencia;
+		int probar=0;
 
 		printf("\n");
 		printf("\n");
@@ -252,8 +253,6 @@ int Gestor::mostrarPelis() {
 				probar =1;
 				
 				
-			}else{
-				probar =0;
 			}
 		} while (result == SQLITE_ROW);
 
